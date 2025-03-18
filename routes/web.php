@@ -4,8 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
-
-
+use App\Http\Controllers\Admin\productController;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,7 +21,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
 
 
 //  Admin Route
@@ -44,10 +43,33 @@ Route::get('/admin/reset-password/{token}/{email}',[AdminController::class, 'Adm
 Route::post('/admin/reset-password-submit',[AdminController::class, 'AdminResetPasswordSubmit'])->name('admin.reset_password_submit');
 
 
+   // Product Routes
+Route::get('/admin/product',[productController::class, 'ProductIndex'])->name('admin.product.index');
+Route::get('/admin/product-create',[productController::class, 'CreateProduct'])->name('admin.product.create');
+Route::post('/admin/poduct-create-Store',[productController::class, 'CreateProductStore'])->name('admin.product.store');
+Route::get('/admin/product-edit/{id}',[productController::class, 'ProductEdit'])->name('admin.product.edit');
+Route::post('/admin/product-update/{id}',[productController::class, 'ProductUpdate'])->name('admin.product.update');
+Route::get('/admin/product-delete/{id}',[productController::class, 'ProductDelete'])->name('admin.product.delete');
+Route::post('/admin/poduct-create-add',[productController::class, 'CreateProductAdd'])->name('admin.product.add');
+
+
+
+    // Category Routs
+Route::get('/admin/Category',[CategoryController::class, 'ShowCategory'])->name('admin.category.show');
+Route::post('/admin/create-actegory',[CategoryController::class, 'CreateCategory'])->name('admin.category.create');
+Route::get('/admin/category-edit/{id}',[CategoryController::class, 'CategorytEdit'])->name('admin.category.edit');
+Route::get('/admin/category-delete/{id}',[CategoryController::class, 'CategoryDelete'])->name('admin.category.delete');
+
+
+
 // CLients Route
 Route::middleware('client')->group(function(){
 
     Route::get('/client/dashboard',[ClientController::class, 'ClientDashboard'])->name('client.Dashboard');
+    Route::get('/client/profile',[ClientController::class, 'ClientProfile'])->name('client.profile');
+    Route::post('/client/profile-store',[ClientController::class, 'ClientProfileStore'])->name('client.profile.store');
+    Route::get('/client/change_password',[ClientController::class, 'ClinetChangePassword'])->name('client.Change_password');
+    Route::post('/client/update_password_submit',[ClientController::class, 'ClientUpdatePasswordSubmit'])->name('client.password.update-submit');
 
 
 });
@@ -56,8 +78,11 @@ Route::get('/client/login',[ClientController::class, 'ClientLogin'])->name('clie
 Route::get('/client/register',[ClientController::class, 'ClientRegister'])->name('client.register');
 Route::post('/client/register_submit',[ClientController::class, 'ClientRegisterSubmit'])->name('client.register_submit');
 Route::post('/client/login-submit',[ClientController::class, 'ClientLoginSubmit'])->name('client.client_submit');
+Route::get('/client/logout',[ClientController::class, 'ClientLogout'])->name('client.logout');
 
 
 
 Route::get('/index',[AdminController::class, 'index']);
 
+
+require __DIR__.'/auth.php';

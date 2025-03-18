@@ -69,7 +69,7 @@ class AdminController extends Controller
         ];
         if (Auth::guard('admin')->attempt($data)) {
             return redirect()->route('admin.Dashboard')->with('success','Login Successfully');
-            # code...
+            
         }else{
 
             return redirect()->route('admin.login')->with('error','Invalid Login');
@@ -278,6 +278,11 @@ class AdminController extends Controller
     }
     //End Method
 
+
+
+
+
+    
 
 
 
