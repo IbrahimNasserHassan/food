@@ -11,7 +11,7 @@ use App\Models\Admin;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Mail;
+
 
 class productController extends Controller
 {
@@ -19,10 +19,10 @@ class productController extends Controller
 
 
     public function ProductIndex(){
-        $categories = Category::all(); 
-        $products=Product::get();
+        $CategoryName = Category::get('CategoryName');
+        $products = Product::get();
         // dd($products);
-        return view('admin.poduct.ProductIndex',compact('categories','products'));
+        return view('admin.poduct.ProductIndex',compact('products','CategoryName'));
     }
     //End Method
 
@@ -39,7 +39,7 @@ class productController extends Controller
     public function CreateProductAdd(Request $request){
         // dd($request->all());
         try {
-            // التحقق من البيانات
+
             $request->validate([
                 'name' => 'required',
                 'category_id' => 'required|exists:categories,id',
@@ -55,13 +55,11 @@ class productController extends Controller
                 'PriceBuy.required' => 'حقل سعر الشراء مطلوب.'
             ]);
     
-            // إنشاء المنتج
             Product::create($request->only(['name', 'category_id', 'quantity', 'PriceSalse', 'PriceBuy']));
     
-            // إعادة التوجيه مع رسالة نجاح
             return redirect()->route('admin.product.index')->with('success', 'تم إضافة المنتج بنجاح');
         } catch (\Exception $e) {
-            // إعادة التوجيه مع رسالة خطأ
+
             return redirect()->back()->with('error', 'حدث خطأ: ' . $e->getMessage());
         }
     }
@@ -73,9 +71,9 @@ class productController extends Controller
 
 
     public function ProductEdit($id){
-
+        $categories=Category::get();
         $product=Product::findOrFail($id);
-        return view('admin.poduct.EditProduct',compact('product'));
+        return view('admin.poduct.EditProduct',compact('product','categories'));
     }
     // End Method
 
@@ -87,7 +85,6 @@ class productController extends Controller
 
         $request->validate([
             'name' => 'required',
-            'category' => 'required',
             'quantity' => 'required',
             'PriceSalse' => 'required',
             'PriceBuy' => 'required'

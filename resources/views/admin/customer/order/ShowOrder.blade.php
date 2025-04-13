@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@section('title')
+الفواتير
+@endsection
 @section('css')
 <!-- Internal Data table css -->
 <link href="{{URL::asset('assets/plugins/datatable/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" />
@@ -13,78 +16,94 @@
 				<div class="breadcrumb-header justify-content-between">
 					<div class="my-auto">
 						<div class="d-flex">
-							<h4 class="content-title mb-0 my-auto">المنتجات</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ جميع المنتجات</span>
+							<h4 class="content-title mb-0 my-auto">الفواتير</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/   عرض القاتورة</span>
 						</div>
 					</div>
-					<div class="d-flex my-xl-auto right-content">
-						<a href="{{ route('admin.product.create') }}" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> إضافة منتج جديد</a>
-					</div>
+					
 				</div>
 				<!-- breadcrumb -->
 @endsection
 @section('content')
 				<!-- row -->
-				<div class="row row-sm">
-					@if(session('success'))
-					<div class="alert alert-success">{{ session('success') }}</div>
-					@endif
+            
+				@if(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
+                <div class="row row-sm">
+					<!--div-->
 					<div class="col-xl-12">
-						<div class="card">
+						<div class="card mg-b-20">
 							<div class="card-header pb-0">
 								<div class="d-flex justify-content-between">
-									<h4 class="card-title mg-b-0">جدول المنتجات</h4>
+									<h4 class="card-title mg-b-0">جدول الفواتير</h4>
 									<i class="mdi mdi-dots-horizontal text-gray"></i>
 								</div>
-								{{-- <div class="d-flex justify-content-center mt-4">
-									{{ $products->links() }}
-								</div> --}}
+								<p class="tx-12 tx-gray-500 mb-2"> <a href=""></a></p>
 							</div>
 							<div class="card-body">
 								<div class="table-responsive">
-									<table class="table text-md-nowrap" id="example2">
+									<table id="example" class="table key-buttons text-md-nowrap">
 										<thead>
 											<tr>
-												<th class="wd-15p border-bottom-0">الاسم</th>
-												<th class="wd-20p border-bottom-0">الكمية</th>
-												<th class="wd-15p border-bottom-0">سعر الشراء</th>
-												<th class="wd-10p border-bottom-0">سعر البيع</th>
-												<th class="wd-10p border-bottom-0"> تاريخ الاضافة</th>
-												<th class="wd-25p border-bottom-0"></th>
+												<th class="border-bottom-0">Name</th>
+												<th class="border-bottom-0">Position</th>
+												<th class="border-bottom-0">Office</th>
+												<th class="border-bottom-0">Age</th>
+												<th class="border-bottom-0">Start date</th>
+												<th class="border-bottom-0">Salary</th>
 											</tr>
 										</thead>
 										<tbody>
-											@php
-												$id = Auth::guard('admin')->id();
-												$profilData = App\Models\Admin::find($id);
-											@endphp
-											@foreach ($products as $product)
 											<tr>
-												<td>{{ $product->name }}</td>
-												<td>{{ $product->quantity }}</td>
-												<td>{{ $product->PriceBuy }}</td>
-												<td>{{ $product->PriceSalse }}</td>
-												<td>{{ $product->created_at->format('Y-m-d')  }} </td>
-
-												<td>
-													<a href="{{ route('admin.product.edit', ['id' => $product->id]) }}" class="btn btn-sm btn-warning"><i class="fa fa-edit"> تعديل</i></a>
-													<form action="{{ route('admin.product.delete',['id' => $product->id]) }}"  class="d-inline" onsubmit="return confirm('هل أنت متأكد من حذف هذا المنتج؟');">
-														@csrf
-														<button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"> حذف</i></button> <br>
-													</form>
-												</td>
+												<td>Tiger Nixon</td>
+												<td>System Architect</td>
+												<td>Edinburgh</td>
+												<td>61</td>
+												<td>2011/04/25</td>
+												<td>$320,800</td>
 											</tr>
-											
-											@endforeach
+											<tr>
+												<td>Garrett Winters</td>
+												<td>Accountant</td>
+												<td>Tokyo</td>
+												<td>63</td>
+												<td>2011/07/25</td>
+												<td>$170,750</td>
+											</tr>
+											<tr>
+												<td>Ashton Cox</td>
+												<td>Junior Technical Author</td>
+												<td>San Francisco</td>
+												<td>66</td>
+												<td>2009/01/12</td>
+												<td>$86,000</td>
+											</tr>
+											<tr>
+												<td>Cedric Kelly</td>
+												<td>Senior Javascript Developer</td>
+												<td>Edinburgh</td>
+												<td>22</td>
+												<td>2012/03/29</td>
+												<td>$433,060</td>
+											</tr>
+											<tr>
+												<td>Airi Satou</td>
+												<td>Accountant</td>
+												<td>Tokyo</td>
+												<td>33</td>
+												<td>2008/11/28</td>
+												<td>$162,700</td>
+											</tr>
 										</tbody>
 									</table>
-									
 								</div>
 							</div>
 						</div>
 					</div>
-					
-				</div>
-				<!-- /row -->
+				
+				<!-- row closed -->
 			</div>
 			<!-- Container closed -->
 		</div>

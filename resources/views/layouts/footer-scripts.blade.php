@@ -8,7 +8,26 @@
 <script src="{{URL::asset('assets/plugins/ionicons/ionicons.js')}}"></script>
 <!-- Moment js -->
 <script src="{{URL::asset('assets/plugins/moment/moment.js')}}"></script>
+{{--  --}}
 
+</script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!--Internal  Flot js-->
+<script src="{{URL::asset('assets/plugins/jquery.flot/jquery.flot.js')}}"></script>
+<script src="{{URL::asset('assets/plugins/jquery.flot/jquery.flot.pie.js')}}"></script>
+<script src="{{URL::asset('assets/plugins/jquery.flot/jquery.flot.resize.js')}}"></script>
+<script src="{{URL::asset('assets/plugins/jquery.flot/jquery.flot.categories.js')}}"></script>
+<script src="{{URL::asset('assets/js/dashboard.sampledata.js')}}"></script>
+<script src="{{URL::asset('assets/js/chart.flot.sampledata.js')}}"></script>
+
+<!--Internal  index js -->
+<script src="{{URL::asset('assets/js/index.js')}}"></script>
+<script src="{{URL::asset('assets/js/jquery.vmap.sampledata.js')}}"></script>
+
+{{--  --}}
 <!-- Rating js-->
 <script src="{{URL::asset('assets/plugins/rating/jquery.rating-stars.js')}}"></script>
 <script src="{{URL::asset('assets/plugins/rating/jquery.barrating.js')}}"></script>

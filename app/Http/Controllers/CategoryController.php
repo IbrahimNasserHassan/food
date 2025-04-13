@@ -22,7 +22,7 @@ class CategoryController extends Controller
 
     public function ShowCategory(){
 
-        $categories = Category::get();
+        $categories = Category::all();
             //  dd($categories);
 
         return view('admin.category.IndexCategory',compact('categories'));
@@ -30,19 +30,32 @@ class CategoryController extends Controller
     // End Method
 
 
+
+
     public function CreateCategory( Request $request){
+        try{
+            $request->validate([
+                'CategoryName'=>'required|unique:categories'
+    
+            ]);
+    
+            Category::create($request->all());
+            return redirect()->route('admin.category.show')->with('success','تمت إضافة الصنف');
 
-        $request->validate([
-            'CategoryName'=>'required'
+        }
+    
+    catch (\Exception $e) {
 
-        ]);
-
-        Category::create($request->all());
-        return redirect()->route('admin.category.show')->with('success','تمت إضافة الصنف');
+        return redirect()->back()->with('error', 'حدث خطأ: ' . $e->getMessage());
+    }
 
     }
     //End Method
 
+
+
+
+    
 
     public function CategorytEdit($id){
 

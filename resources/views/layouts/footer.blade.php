@@ -3,7 +3,6 @@
 		<div class="container-fluid pd-t-0-f ht-100p">
 			<span>Copyright © <script>document.write(new Date().getFullYear())</script><a href="#"> Ibrahim </a>. Designed by <a href="https://www.spruko.com/">DCT</a> All rights reserved.</span>
 			
-			
 		</div>
 	</div>
 	<footer class="footer">

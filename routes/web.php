@@ -6,6 +6,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\Admin\productController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\OrderController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -59,6 +61,28 @@ Route::get('/admin/Category',[CategoryController::class, 'ShowCategory'])->name(
 Route::post('/admin/create-actegory',[CategoryController::class, 'CreateCategory'])->name('admin.category.create');
 Route::get('/admin/category-edit/{id}',[CategoryController::class, 'CategorytEdit'])->name('admin.category.edit');
 Route::get('/admin/category-delete/{id}',[CategoryController::class, 'CategoryDelete'])->name('admin.category.delete');
+
+
+
+    // Customer Route
+Route::get('/admin/customer',[CustomerController::class, 'ShowCustomer'])->name('admin.customer.index');
+Route::get('/admin/create-customer',[CustomerController::class, 'CreateCustomer'])->name('admin.customer.create');
+Route::post('/admin/Customer-Store',[CustomerController::class, 'CustomerStore'])->name('admin.customer.store');
+Route::get('/admin/customer-edit/{id}',[CustomerController::class, 'CustomertEdit'])->name('admin.customer.edit');
+Route::get('/admin/customer-delete/{id}',[CustomerController::class, 'CustomerDelete'])->name('admin.customer.delete');
+
+
+
+    // Order Route
+Route::get('/admin/customer/order-index',[OrderController::class, 'Indexorder'])->name('admin.customer.order.index');
+Route::get('order/create', [OrderController::class, 'CreateOrder'])->name('admin.order.create');
+Route::get('/admin/customer/{customer}/order/create',[OrderController::class, 'CreateOrder'])->name('admin.customer.order.create');
+Route::post('/admin/Order-Store',[OrderController::class, 'StoreOrder'])->name('admin.order.store');
+Route::get('/admin/customer/order-details',[OrderController::class, 'CreateDetails'])->name('admin.customer.order.details');
+
+
+
+
 
 
 

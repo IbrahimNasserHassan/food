@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-إضافة منتج
+إضافة عميل
 @endsection
 @section('css')
 @endsection
@@ -9,7 +9,7 @@
 				<div class="breadcrumb-header justify-content-between">
 					<div class="my-auto">
 						<div class="d-flex">
-							<h4 class="content-title mb-0 my-auto">المنتجات</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/  إضافة منتج</span>
+							<h4 class="content-title mb-0 my-auto">العملاء</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/  إضافة عميل</span>
 						</div>
 					</div>
 					
@@ -32,39 +32,39 @@
                         <div class="col-lg-12 col-xl-10 col-md-12 col-sm-12">
                             <div class="card  box-shadow-0">
                                 <div class="card-header">
-                                    <h4 class="card-title mb-1">إضافة منتج </h4>
+                                    <h4 class="card-title mb-1">إضافة عميل </h4>
                                 </div>
+                                <br>
                                 <div class="card-body pt-0">
-                                    <form action="{{ route('admin.product.add') }}" method="POST" class="form-horizontal" >
+                                    <form action="{{ route('admin.customer.store') }}" method="POST" class="form-horizontal" >
                                         @csrf
                                         <div class="form-group">
-                                            <input type="text" name="name" class="form-control" id="inputName" placeholder="الاسم">
+                                            <input type="text" name="CustomerName" class="form-control" id="inputName" placeholder="إسم العميل">
                                         </div>
-                                        <div>
-                                            <select class="form-control" name="category_id" id="category_id" required>
-                                                <option value="">حدد الصنف</option>
-                                                @foreach($categories as $category)
-                                                    <option value="{{ $category->id }}">{{ $category->CategoryName }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div> <br>
+                                        
                                         <div class="form-group">
-                                            <input type="number" name="quantity" step="0.01" class="form-control" id="" placeholder="الكمية">
+                                            <textarea name="CustomerAddree" class="form-control" placeholder="العنوان"></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" name="PriceSalse" step="0.01" class="form-control" id="inputName" placeholder="سعر الشراء">
+                                            <input type="text" name="CustomerCity"  class="form-control" id="" placeholder="الولاية">
                                         </div>
-                                        <div class="form-group"> 
-                                            <input type="number" name="PriceBuy" step="0.01" class="form-control" id="inputName" placeholder="سعر البيع">
+                                        <div class="form-group">
+                                            <input type="text" name="CustomerPhone[]" class="form-control" id="" placeholder=" رقم الهاتف  (مطلوب!)">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" name="CustomerPhone[]" class="form-control" id="" placeholder="رقم الهاتف ">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" name="CustomerEmail" class="form-control" id="" placeholder="البريد الإلكتروني">
                                         </div>
                                         </div>
                                         <div class="form-group mb-0 mt-9 justify-content-end">
                                             <div>
                                                 <button type="submit" class="btn btn-primary">حفظ</button>
-                                                <a href="{{ route('admin.product.index') }}" class="btn btn-secondary"><i class="fa fa-cros">إلغاء</i></a>
+                                                <a href="{{ route('admin.customer.index') }}" class="btn btn-secondary"><i class="fa fa-cros">إلغاء</i></a>
                                             </div>
                                         </div>
-                                    </form>
+                                    </form> <br>
                                 </div>
                             </div>
                         </div>

@@ -26,18 +26,20 @@
                                     <form action="{{ route('admin.product.update',$product->id) }}" method="POST" class="form-horizontal" >
                                         @csrf
                                         <div class="form-group">
+                                            إسم المنتج :    
                                             <input type="text" name="name" class="form-control" id="inputName" value="{{ $product->name }}">
                                         </div>
+                                    
                                         <div class="form-group">
-                                            <input type="text" name="category" class="form-control" id="" value="{{ $product->category }}">
-                                        </div>
-                                        <div class="form-group">
+                                            الكمية :
                                             <input type="number" name="quantity" class="form-control" id="" value="{{ $product->quantity }}">
                                         </div>
                                         <div class="form-group">
+                                            سعر البيع :
                                             <input type="number" name="PriceSalse" class="form-control" id="inputName" value="{{ $product->PriceSalse }}">
                                         </div>
                                         <div class="form-group">
+                                            سعر الشراء :
                                             <input type="number" name="PriceBuy" class="form-control" id="inputName" value="{{ $product->PriceBuy }}">
                                         </div>
                                         </div>
