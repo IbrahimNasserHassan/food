@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\productController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderDetailsController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -78,10 +79,14 @@ Route::get('/admin/customer/order-index',[OrderController::class, 'Indexorder'])
 Route::get('order/create', [OrderController::class, 'CreateOrder'])->name('admin.order.create');
 Route::get('/admin/customer/{customer}/order/create',[OrderController::class, 'CreateOrder'])->name('admin.customer.order.create');
 Route::post('/admin/Order-Store',[OrderController::class, 'StoreOrder'])->name('admin.order.store');
-Route::get('/admin/customer/order-details',[OrderController::class, 'CreateDetails'])->name('admin.customer.order.details');
 
-
-
+//Order Details
+Route::get('/admin/customer/OrderDetails/{id}', [OrderDetailsController::class, 'ShowOrder'])->name('admin.customer.order.details');
+Route::get('/admin/customer/orders-show/{id}', [OrderDetailsController::class, 'CustomerOrderShow'])->name('admin.customer.orders.show');
+Route::post('orders/{order}/update-status', [OrderController::class, 'updatePaymentStatus'])->name('admin.customer.order.update');
+Route::put('/admin/orders/{id}/update-status', [OrderDetailsController::class, 'updateStatus'])->name('admin.orders.updateStatus');
+Route::get('/admin/customer/order-edit/{id}',[OrderController::class, 'EditOrder'])->name('admin.customer.order.edit');
+Route::get('/admin/customer/order-delete/{id}',[OrderController::class, 'OrderDelete'])->name('admin.customer.order.delete');
 
 
 

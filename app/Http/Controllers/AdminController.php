@@ -225,7 +225,7 @@ class AdminController extends Controller
 
         if (file_exists($fullPath)) {
             unlink($fullPath);
-            # code...
+            
         }
     }
     //End Private Method

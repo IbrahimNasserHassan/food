@@ -69,7 +69,7 @@
                                                 <td>{{ $customer->CustomerEmail }}</td>
                                                 <td>
                                                     {{-- @dd(get_defined_vars()) --}}
-                                                    <a href="" class="btn btn-sm btn-primary"><i class=" fa fa-list">  فواتير العميل </i></a>
+                                                    <a href="{{ route('admin.customer.orders.show',$customer->id) }}" class="btn btn-sm btn-primary"><i class=" fa fa-list">  فواتير العميل </i></a>
 													<a href="{{ route('admin.customer.order.create', ['customer' => $customer->id]) }}" class=""><i class="btn btn-sm btn-success">إنشاء فاتورة </i></a>
 
                                                     <form action="{{ route('admin.customer.delete',['id' => $customer->id]) }}"  class="d-inline" onsubmit="return confirm('  هل أنت متأكد من حذف هذا العميل! ');">

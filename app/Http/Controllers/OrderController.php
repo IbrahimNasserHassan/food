@@ -14,7 +14,8 @@ class OrderController extends Controller
 {
 
     public function Indexorder(){
-        return view('admin.customer.order.ShowOrder',compact('customers'));
+        $orders= Order::get();
+        return view('admin.customer.order.OrderIndex',compact('orders'));
 
     }
     //End Method 
@@ -68,7 +69,7 @@ class OrderController extends Controller
         $order = Order::create([
             'customer_id' => $request->customer_id,
             'total_amount' => $request->total_amount,
-            'payment_status' => $request->invoice_type ?? 'unpaid', 
+            'payment_status' => $request->invoice_type == 'paid' ? 'paid' : 'unpaid',    
         ]);
 
         
@@ -93,7 +94,7 @@ class OrderController extends Controller
 
 
         
-        return redirect()->route('admin.Dashboard')->with('success', 'تم إنشاء الطلب بنجاح');
+        return redirect()->route('admin.customer.order.index')->with('success', 'تم إنشاء الطلب بنجاح');
     }
     // End Method
 
@@ -111,8 +112,11 @@ class OrderController extends Controller
 
 
 
-    public function EditOrder(Client $client, Order $order){
+    public function EditOrder(Customer $customer, Order $order){
 
+        $orderdetails=OrderDetails::get();
+        $order=Order::findOrFail();
+        return view('admin.customer.order.UpdateOrder',compact('order','orderdetails'));
 
 
     }
@@ -120,7 +124,7 @@ class OrderController extends Controller
 
 
 
-    public function UpdateOrder(Request $request, Order $order){
+    public function updatePaymentStatus(Request $request, Order $order){
 
 
         $request->validate([

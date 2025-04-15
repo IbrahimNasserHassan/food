@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-إنشاء فاتورة
+تحديث فاتورة
 @endsection
 @section('css')
 @endsection
@@ -9,7 +9,7 @@
 <div class="breadcrumb-header justify-content-between">
     <div class="my-auto">
         <div class="d-flex">
-            <h4 class="content-title mb-0 my-auto">الفواتير</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ إنشاء القاتورة</span>
+            <h4 class="content-title mb-0 my-auto">الفواتير</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ تحديث القاتورة</span>
         </div>
     </div>
 </div>
@@ -31,8 +31,8 @@
     <div class="row" style="width: 18rem;">
         <label for="invoice_type" class="form-label">نوع الفاتورة:</label>
         <select name="invoice_type" class="form-control">
-            <option value="unpaid">غير مدفوعة</option>
-            <option value="paid">مدفوعة</option>
+            <option value="غير مدفوعة">غير مدفوعة</option>
+            <option value="مدفوعة">مدفوعة</option>
         </select>
     </div><br>
     <div class="col-sm-7">
@@ -46,7 +46,6 @@
                 <div class="mb-3">
                     <p><strong>إسم العميل:</strong> {{ $customer->CustomerName }} </p>
                     <p><strong>رقم الهاتف:</strong> {{ $customer->CustomerPhone[0] }}
-                        {{-- {{ is_array($customer->CustomerPhone) ? implode(' - ', $customer->CustomerPhone) : $customer->CustomerPhone }} --}}
                     </p>
                 </div>
                 @else

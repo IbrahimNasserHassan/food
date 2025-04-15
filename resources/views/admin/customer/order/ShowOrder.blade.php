@@ -1,7 +1,8 @@
 @extends('layouts.master')
 @section('title')
-الفواتير
+تفاصيل الفاتورة
 @endsection
+
 @section('css')
 <!-- Internal Data table css -->
 <link href="{{URL::asset('assets/plugins/datatable/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" />
@@ -11,106 +12,162 @@
 <link href="{{URL::asset('assets/plugins/datatable/css/responsive.dataTables.min.css')}}" rel="stylesheet">
 <link href="{{URL::asset('assets/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
 @endsection
+
 @section('page-header')
-				<!-- breadcrumb -->
-				<div class="breadcrumb-header justify-content-between">
-					<div class="my-auto">
-						<div class="d-flex">
-							<h4 class="content-title mb-0 my-auto">الفواتير</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/   عرض القاتورة</span>
-						</div>
-					</div>
-					
-				</div>
-				<!-- breadcrumb -->
+<div class="breadcrumb-header justify-content-between">
+    <div class="my-auto">
+        <div class="d-flex">
+            <h4 class="content-title mb-0 my-auto">الفواتير</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ عرض الفاتورة</span>
+        </div>
+    </div>
+</div>
 @endsection
+
 @section('content')
-				<!-- row -->
-            
-				@if(session('error'))
-                    <div class="alert alert-danger">
-                        {{ session('error') }}
+@if(session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
+@php
+$id = Auth::guard('admin')->id();
+$profilData = App\Models\Admin::find($id);
+@endphp
+
+<div class="row row-sm">
+    <div>
+        <a href="{{ route('admin.customer.order.index') }}" class="btn btn-sm btn-dark float-right ">
+            <i class="fa fa-arrow-left"></i> رجوع
+        </a>
+    </div>
+    <br>
+    
+    <div class="col-md-12 col-xl-12">
+		<div id="invoiceArea">
+        <div class="main-content-body-invoice">
+            <div class="card card-invoice">
+                <div class="card-body">
+                    <div class="invoice-header">
+                        <h1 class="invoice-title">GadooraItech</h1>
+                        <div class="main-img-user">
+                            <img alt="" src="{{ !empty($profilData->photo) ? url('upload/admin_images/'.$profilData->photo) : url('upload/DCT.png') }}">
+                        </div>
+
+                        <div class="billed-from">
+                            <h6>مستخرج الفاتورة</h6>
+                            <p>الاسم: {{ $profilData->name }}<br>رقم هاتف: {{ $profilData->phone }}</p>
+                        </div>
                     </div>
-                @endif
-                <div class="row row-sm">
-					<!--div-->
-					<div class="col-xl-12">
-						<div class="card mg-b-20">
-							<div class="card-header pb-0">
-								<div class="d-flex justify-content-between">
-									<h4 class="card-title mg-b-0">جدول الفواتير</h4>
-									<i class="mdi mdi-dots-horizontal text-gray"></i>
-								</div>
-								<p class="tx-12 tx-gray-500 mb-2"> <a href=""></a></p>
-							</div>
-							<div class="card-body">
-								<div class="table-responsive">
-									<table id="example" class="table key-buttons text-md-nowrap">
-										<thead>
-											<tr>
-												<th class="border-bottom-0">Name</th>
-												<th class="border-bottom-0">Position</th>
-												<th class="border-bottom-0">Office</th>
-												<th class="border-bottom-0">Age</th>
-												<th class="border-bottom-0">Start date</th>
-												<th class="border-bottom-0">Salary</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>Tiger Nixon</td>
-												<td>System Architect</td>
-												<td>Edinburgh</td>
-												<td>61</td>
-												<td>2011/04/25</td>
-												<td>$320,800</td>
-											</tr>
-											<tr>
-												<td>Garrett Winters</td>
-												<td>Accountant</td>
-												<td>Tokyo</td>
-												<td>63</td>
-												<td>2011/07/25</td>
-												<td>$170,750</td>
-											</tr>
-											<tr>
-												<td>Ashton Cox</td>
-												<td>Junior Technical Author</td>
-												<td>San Francisco</td>
-												<td>66</td>
-												<td>2009/01/12</td>
-												<td>$86,000</td>
-											</tr>
-											<tr>
-												<td>Cedric Kelly</td>
-												<td>Senior Javascript Developer</td>
-												<td>Edinburgh</td>
-												<td>22</td>
-												<td>2012/03/29</td>
-												<td>$433,060</td>
-											</tr>
-											<tr>
-												<td>Airi Satou</td>
-												<td>Accountant</td>
-												<td>Tokyo</td>
-												<td>33</td>
-												<td>2008/11/28</td>
-												<td>$162,700</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
+
+                    <div class="row mg-t-20">
+                        <div class="col-md">
+                            <label class="tx-gray-600">بيانات العميل</label>
+                            <div class="billed-to">
+                                <h6>الاسم: {{ $order->customer->CustomerName ?? 'غير معروف' }}</h6>
+                                <p>العنوان: {{ $order->customer->CustomerAddree ?? 'غير معروف' }}<br>
+                                رقم الهاتف: {{ $order->customer->CustomerPhone [0] ?? 'غير معروف' }}<br>
+                            </div>
+                        </div>
+
+                        <div class="col-md">
+                            <label class="tx-gray-600">بيانات الفاتورة</label>
+                            <p class="invoice-info-row"><span>رقم الفاتورة</span> <span>{{ $order->id }}</span></p>
+                            <p class="invoice-info-row"><span>تاريخ الإستخراج</span> <span>{{ $order->created_at }}</span></p>
+                        </div>
+                    </div>
+                    <div class="table-responsive mg-t-10">
+                        <table class="table table-invoice  border text-md-nowrap mb-0">
+                            <thead class="table-active">
+                                <tr>
+                                    <th class="wd-20p">إسم المنتج</th>
+                                    <th class="tx-center">الكمية</th>
+                                    <th class="tx-right">السعر</th>
+                                    <th class="tx-right">المجموع</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($orderDetails as $details)
+                                    <tr>
+                                        <td>{{ $details->product->name ?? 'غير معروف' }}</td>
+                                        <td class="tx-center">{{ number_format($details->quantity) }}</td>
+                                        <td class="tx-right">{{ number_format($details->price) }}</td>
+                                        <td class="tx-right">{{ number_format($details->quantity * $details->price) }}</td>
+                                    </tr>
+									{{ $details->payment_status }}
+
+                                @endforeach
+								<tr>
+									<div class="container text-center">
+										<div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+										<div class="col">
+											<div class="p-3">
+												
+											</div>
+										</div>
+										</div>
+										<div class="col">
+											<div class="p-3">
+												<h6 class="tx-gray-600">حالة الدفع</h6>														
+                                                <span class="badge bg-{{ $order->payment_status == 'paid' ? 'success' : 'warning' }}">
+                                                    {{ $order->payment_status == 'paid' ? 'مدفوعة' : 'غير مدفوعة' }}
+                                                </span>
+												</div>
+											
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="3" class="tx-center  tx-uppercase tx-bold tx-inverse"> </td>
+                                    <td class=" table-active tx-rigth">
+                                        <h6 class="tx-primary tx-bold">إجمالي :{{ number_format($order->total_amount) }} <span>جنيه</span></h6>
+                                    </td>
+								</tr>
+							</tbody>
+                        </table>
+                    
+					</div> <br>
+					<div class="invoice-notes tx-center">
+						<p>هذه الفاتورة تم إنشاؤها من قبل نظام GadooraItech</p>
+						هواتفنا:{{ $profilData->phone }} - 
+						موقعنا:   {{ $profilData->address }}
 					</div>
-				
-				<!-- row closed -->
+				</div>
 			</div>
-			<!-- Container closed -->
 		</div>
-		<!-- main-content closed -->
+		</div>
+		<div class="card-footer">
+				<div class="d-flex justify-content-between">
+					
+					<a href="#" onclick="printInvoice()" class="btn btn-danger float-left mt-3 mr-2">
+						<i class="mdi mdi-printer ml-1"></i> طباعة
+					</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 @endsection
+
 @section('js')
-<!-- Internal Data tables -->
+
+<script>
+    function printInvoice() {
+        var printContents = document.getElementById('invoiceArea').innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+        location.reload(); 
+    }
+</script>
+
+
+
+
 <script src="{{URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.dataTables.min.js')}}"></script>
 <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.responsive.min.js')}}"></script>
@@ -127,6 +184,6 @@
 <script src="{{URL::asset('assets/plugins/datatable/js/buttons.colVis.min.js')}}"></script>
 <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.responsive.min.js')}}"></script>
 <script src="{{URL::asset('assets/plugins/datatable/js/responsive.bootstrap4.min.js')}}"></script>
-<!--Internal  Datatable js -->
 <script src="{{URL::asset('assets/js/table-data.js')}}"></script>
+<script src="{{URL::asset('assets/plugins/chart.js/Chart.bundle.min.js')}}"></script>
 @endsection

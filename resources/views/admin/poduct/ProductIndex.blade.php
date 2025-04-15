@@ -61,8 +61,8 @@
 											<tr>
 												<td>{{ $product->name }}</td>
 												<td>{{ $product->quantity }}</td>
-												<td>{{ $product->PriceBuy }}</td>
-												<td>{{ $product->PriceSalse }}</td>
+												<td>{{ number_format($product->PriceBuy) }}</td>
+												<td>{{ number_format($product->PriceSalse) }}</td>
 												<td>{{ $product->created_at->format('Y-m-d')  }} </td>
 
 												<td>
