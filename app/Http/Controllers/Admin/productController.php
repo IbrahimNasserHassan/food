@@ -80,6 +80,8 @@ class productController extends Controller
 
 
 
+    
+
     public function ProductUpdate(Request $request,$id){
         $product=Product::findOrFail($id);
 
@@ -94,6 +96,8 @@ class productController extends Controller
         return redirect()->route('admin.product.index')->with('success','تم تعديل المنتج بنجاح');
     }
     //End Method    
+
+
 
 
 

@@ -43,11 +43,14 @@ class AdminController extends Controller
 
 
     public function AdminDashboard(){
-        
+    
+
 		$id = Auth::guard('admin')->id();
+    
 		$profilData = Admin::find($id);
 
         return view('admin.dashboard',compact('profilData'));
+    
     }
 
     //End Method
@@ -225,7 +228,7 @@ class AdminController extends Controller
 
         if (file_exists($fullPath)) {
             unlink($fullPath);
-            
+            # code...
         }
     }
     //End Private Method

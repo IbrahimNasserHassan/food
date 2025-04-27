@@ -22,6 +22,8 @@ class OrderDetailsController extends Controller
 
 
 
+
+
     public function CustomerOrderShow($id)
     {
         $customer = Customer::with('orders')->findOrFail($id);
@@ -32,6 +34,8 @@ class OrderDetailsController extends Controller
 
 
 
+
+    
 
     public function updateStatus($id)
 {
@@ -64,7 +68,7 @@ class OrderDetailsController extends Controller
         $order = Order::findOrFail($id);
         $order->delete();
 
-        return redirect()->route('admin.customer.order.index')->with('success', 'تم حذف الطلب بنجاح');
+        return redirect()->route('admin.customer.order.index')->with('success', 'تم حذف الطلب ');
     }
     //End Method
 

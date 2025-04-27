@@ -29,6 +29,7 @@
                                             إسم المنتج :    
                                             <input type="text" name="name" class="form-control" id="inputName" value="{{ $product->name }}">
                                         </div>
+                                        
                                     
                                         <div class="form-group">
                                             الكمية :

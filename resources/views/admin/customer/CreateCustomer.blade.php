@@ -68,11 +68,7 @@
                                 </div>
                             </div>
                         </div>
-                        
                     </div>
-                    
-			
-				
 				<!-- /row -->
 			</div>
 			<!-- Container closed -->

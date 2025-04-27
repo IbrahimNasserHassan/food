@@ -76,8 +76,17 @@ $profilData = App\Models\Admin::find($id);
                         </td>
                         <td>
                             <a href="{{ route('admin.customer.order.details', $order) }}" class="btn btn-sm btn-info">
-                                عرض التفاصيل
+                                <i class="fa fa-list"> عرض التفاصيل </i>
                             </a>
+                                @if($order->payment_status !== 'paid')
+    					    		<form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST" style="display: inline-block;">
+    					    		    @csrf
+    					    		    @method('PUT')
+    					    		    <button class="btn btn-sm btn-success" onclick="return confirm('هل أنت متأكد من تغير الحالة إلى مدفوعة؟')">
+    					    		        <i class="fa fa-check"> تأكيد الدفع</i>
+    					    		    </button>
+    					    		</form>
+						    	@endif
                         </td>
                     </tr>
                     @endforeach

@@ -63,6 +63,7 @@ class CategoryController extends Controller
         return view('admin.category.EditCategory',compact('category'));
 
     }
+    //End Method
 
 
 

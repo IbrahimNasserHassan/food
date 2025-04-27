@@ -28,16 +28,16 @@
 @if(session('success'))
 
 
-					<div class="alert alert-success">{{ session('success') }}</div>
-					@endif
-                    @if(session('error'))
-					<div class="alert alert-danger">{{ session('error') }}</div>
-					@endif
-				<!-- row -->
-				@php
-                $id = Auth::guard('admin')->id();
-                $profilData = App\Models\Admin::find($id);
-                @endphp
+	<div class="alert alert-success">{{ session('success') }}</div>
+	@endif
+    @if(session('error'))
+	<div class="alert alert-danger">{{ session('error') }}</div>
+	@endif
+	<!-- row -->
+	@php
+    $id = Auth::guard('admin')->id();
+    $profilData = App\Models\Admin::find($id);
+    @endphp
 
 				<div class="row">
                     <div class="col-xl-12">
@@ -74,21 +74,20 @@
 												<td>{{ $order->created_at->format('Y-m-d') }}</td>
                                                 <td>
 													<span class="badge bg-{{ $order->payment_status == 'paid' ? 'success' : 'warning' }}">
-														{{ $order->payment_status == 'paid' ? 'مدفوعة' : 'غير مدفوعة' }}
+														{{ $order->payment_status == 'paid' ? 'تم الدفع' : 'غير مدفوعة' }}
 													</span>
 													</td>
                                                 <td>{{ $profilData->name }}ِ</td>
 												<td>
                                                     <a href="{{ route('admin.customer.order.details', $order->id) }}" class="btn btn-sm btn-info"><i class="fa fa-info-circle"> عرض</i></a>
-                                                    <a href="" class="btn btn-sm btn-warning"><i class="fa fa-edit"> تحديث</i></a>
 													@if($order->payment_status !== 'paid')
-    											<form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST" style="display: inline-block;">
-    											    @csrf
-    											    @method('PUT')
-    											    <button class="btn btn-sm btn-success" onclick="return confirm('هل أنت متأكد من تغير الحالة إلى مدفوعة؟')">
-    											        <i class="fa fa-check"> مدفوعة</i>
-    											    </button>
-    											</form>
+    													<form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST" style="display: inline-block;">
+    													    @csrf
+    													    @method('PUT')
+    													    <button class="btn btn-sm btn-success" onclick="return confirm('هل أنت متأكد من تغير الحالة إلى مدفوعة؟')">
+    													        <i class="fa fa-check"> تأكيد الدفع</i>
+    													    </button>
+    													</form>
 													@endif
 
                                                 </td>

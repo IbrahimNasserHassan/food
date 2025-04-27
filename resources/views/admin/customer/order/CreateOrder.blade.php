@@ -9,7 +9,7 @@
 <div class="breadcrumb-header justify-content-between">
     <div class="my-auto">
         <div class="d-flex">
-            <h4 class="content-title mb-0 my-auto">الفواتير</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ إنشاء القاتورة</span>
+            <h4 class="content-title mb-0 my-auto">الفواتير</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ إنشاء فاتورة</span>
         </div>
     </div>
 </div>
@@ -43,11 +43,12 @@
             <div class="card-body">
                 @if(isset($fromCustomerPage) && $fromCustomerPage)
                 <input type="hidden" name="customer_id" value="{{ $customer->id }}">
-                <div class="mb-3">
-                    <p><strong>إسم العميل:</strong> {{ $customer->CustomerName }} </p>
-                    <p><strong>رقم الهاتف:</strong> {{ $customer->CustomerPhone[0] }}
-                        {{-- {{ is_array($customer->CustomerPhone) ? implode(' - ', $customer->CustomerPhone) : $customer->CustomerPhone }} --}}
-                    </p>
+                <div class="mb-2">
+                    
+                    <input class="form-control" type="" value="{{ $customer->CustomerName }}" readonly>
+                    <label for=""></label>
+                    <input class="form-control" type="" value="{{ $customer->CustomerPhone[0] }}" readonly>
+                
                 </div>
                 @else
                 <div class="mb-3">
@@ -113,9 +114,10 @@
             <div class="modal-body">
                 <select id="product-select" class="form-select">
                     <option value="">اختر منتج من القائمة</option>
+                
                     @foreach($products as $product)
                     <option value="{{ $product->id }}" data-name="{{ $product->name }}" data-price="{{ $product->price }}">
-                        {{ $product->name }} 
+                        {{ $product->name }} - ({{ $product->PriceSalse }} جنيه) 
                     </option>
                     @endforeach
                 </select>

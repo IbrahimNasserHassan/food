@@ -9,10 +9,16 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailsController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ServicesController;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+
+// Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('users.')->group(function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -80,14 +86,35 @@ Route::get('order/create', [OrderController::class, 'CreateOrder'])->name('admin
 Route::get('/admin/customer/{customer}/order/create',[OrderController::class, 'CreateOrder'])->name('admin.customer.order.create');
 Route::post('/admin/Order-Store',[OrderController::class, 'StoreOrder'])->name('admin.order.store');
 
+
+
+
+
+
 //Order Details
 Route::get('/admin/customer/OrderDetails/{id}', [OrderDetailsController::class, 'ShowOrder'])->name('admin.customer.order.details');
 Route::get('/admin/customer/orders-show/{id}', [OrderDetailsController::class, 'CustomerOrderShow'])->name('admin.customer.orders.show');
 Route::post('orders/{order}/update-status', [OrderController::class, 'updatePaymentStatus'])->name('admin.customer.order.update');
 Route::put('/admin/orders/{id}/update-status', [OrderDetailsController::class, 'updateStatus'])->name('admin.orders.updateStatus');
 Route::get('/admin/customer/order-edit/{id}',[OrderController::class, 'EditOrder'])->name('admin.customer.order.edit');
+// Route::post('/admin/customer/order-update/{id}',[OrderController::class, 'UpdateOrder'])->name('admin.customer.order.update');
 Route::get('/admin/customer/order-delete/{id}',[OrderController::class, 'OrderDelete'])->name('admin.customer.order.delete');
 
+
+
+
+
+//Report Route
+Route::get('/admin/report',[ReportController::class, 'SalesReport'])->name('admin.report');
+
+
+
+
+//Service Route
+Route::get('/admin/Services',[ServicesController::class, 'index'])->name('admin.services.index');
+Route::get('/admin/create-services',[ServicesController::class, 'CreateServices'])->name('admin.create.service');
+Route::post('/admin/servics-store',[ServicesController::class, 'StoreService'])->name('admin.service.store');
+Route::get('/admin/service-details/{id}',[ServicesController::class, 'serviceDetails'])->name('admin.service.details');
 
 
 
