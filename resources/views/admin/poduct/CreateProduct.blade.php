@@ -48,6 +48,14 @@
                                                 @endforeach
                                             </select>
                                         </div> <br>
+                                        <div>
+                                            <select class="form-control" name="supplier_id" id="supplier_id" required>
+                                                <option value="">المورد </option>
+                                                @foreach($suppliers as $supplier)
+                                                    <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div> <br>
                                         <div class="form-group">
                                             <input type="number" name="quantity" step="0.01" class="form-control" id="" placeholder="الكمية">
                                         </div>

@@ -10,6 +10,7 @@ use App\Mail\Websitemail;
 use App\Models\Admin;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Supplier;
 use Illuminate\Support\Arr;
 
 
@@ -30,8 +31,9 @@ class productController extends Controller
 
     public function CreateProduct(){
 
-        $categories = Category::all(); 
-        return view('admin.poduct.CreateProduct',compact('categories'));
+        $categories = Category::all();
+        $suppliers = Supplier::all();
+        return view('admin.poduct.CreateProduct',compact('categories','suppliers'));
     }
     // End Method
 
@@ -43,19 +45,22 @@ class productController extends Controller
             $request->validate([
                 'name' => 'required',
                 'category_id' => 'required|exists:categories,id',
+                'supplier_id' => 'required|exists:suppliers,id',
                 'quantity' => 'required',
                 'PriceSalse' => 'required',
                 'PriceBuy' => 'required'
-            ], [
+            ], 
+            [
                 'name.required' => 'حقل الاسم مطلوب.',
                 'category_id.required' => 'حقل الصنف مطلوب.',
                 'category_id.exists' => 'الصنف المحدد غير موجود.',
+                'supplier_id.exists' => 'الصنف المحدد غير موجود.',
                 'quantity.required' => 'حقل الكمية مطلوب.',
                 'PriceSalse.required' => 'حقل سعر البيع مطلوب.',
                 'PriceBuy.required' => 'حقل سعر الشراء مطلوب.'
             ]);
     
-            Product::create($request->only(['name', 'category_id', 'quantity', 'PriceSalse', 'PriceBuy']));
+            Product::create($request->only(['name', 'category_id','supplier_id', 'quantity', 'PriceSalse', 'PriceBuy']));
     
             return redirect()->route('admin.product.index')->with('success', 'تم إضافة المنتج بنجاح');
         } catch (\Exception $e) {

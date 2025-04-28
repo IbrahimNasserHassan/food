@@ -11,6 +11,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\SupplierController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,11 +25,26 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+
+
+
+Route::get('/admin/login',[AdminController::class, 'AdminLogin'])->name('admin.login');
+Route::post('/admin/login_submit',[AdminController::class, 'AdminLoginSubmit'])->name('admin.login_submit');
+Route::get('/admin/logout',[AdminController::class, 'AdminLogout'])->name('admin.logout');
+Route::get('/admin/forget_password',[AdminController::class, 'AdminForgetPssowrd'])->name('admin.forget_Password');
+Route::post('/admin/password_submit',[AdminController::class, 'AdminPasswordSubmit'])->name('admin.password_submit');
+Route::get('/admin/reset-password/{token}/{email}',[AdminController::class, 'AdminResetPassword']);
+Route::post('/admin/reset-password-submit',[AdminController::class, 'AdminResetPasswordSubmit'])->name('admin.reset_password_submit');
 
 
 
@@ -41,15 +57,9 @@ Route::middleware('admin')->group(function(){
     Route::get('/admin/change-profile',[AdminController::class, 'AdminChangePassword'])->name('admin.change.password');
     Route::post('/admin/password-update',[AdminController::class, 'AdminPasswordUpdate'])->name('admin.password.update');
 
-});
 
-Route::get('/admin/login',[AdminController::class, 'AdminLogin'])->name('admin.login');
-Route::post('/admin/login_submit',[AdminController::class, 'AdminLoginSubmit'])->name('admin.login_submit');
-Route::get('/admin/logout',[AdminController::class, 'AdminLogout'])->name('admin.logout');
-Route::get('/admin/forget_password',[AdminController::class, 'AdminForgetPssowrd'])->name('admin.forget_Password');
-Route::post('/admin/password_submit',[AdminController::class, 'AdminPasswordSubmit'])->name('admin.password_submit');
-Route::get('/admin/reset-password/{token}/{email}',[AdminController::class, 'AdminResetPassword']);
-Route::post('/admin/reset-password-submit',[AdminController::class, 'AdminResetPasswordSubmit'])->name('admin.reset_password_submit');
+
+
 
 
    // Product Routes
@@ -117,6 +127,20 @@ Route::post('/admin/servics-store',[ServicesController::class, 'StoreService'])-
 Route::get('/admin/service-details/{id}',[ServicesController::class, 'serviceDetails'])->name('admin.service.details');
 
 
+
+
+// Supplier Route
+Route::get('/admin/suppliers',[SupplierController::class, 'index'])->name('admin.supplier.index');
+Route::get('/admin/create-supplier',[SupplierController::class, 'create'])->name('admin.supplier.create');
+Route::post('/admin/store-supplier',[SupplierController::class, 'StoreSupplier'])->name('admin.supplier.store');
+Route::get('/admin/supplier-delete/{id}',[SupplierController::class, 'SupplierDelete'])->name('admin.supplier.delete');
+
+
+
+
+
+
+});
 
 // CLients Route
 Route::middleware('client')->group(function(){

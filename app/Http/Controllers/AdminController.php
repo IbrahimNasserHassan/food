@@ -61,21 +61,21 @@ class AdminController extends Controller
     public function AdminLoginSubmit(Request $request){
 
         $request->validate([
-            'email' => 'required|email',
+            'name' => 'required',
             'password' => 'required', 
         ]);
 
         $check = $request->all();
         $data = [
-            'email' => $check['email'],
+            'name' => $check['name'],
             'password' => $check['password']
         ];
         if (Auth::guard('admin')->attempt($data)) {
-            return redirect()->route('admin.Dashboard')->with('success','Login Successfully');
+            return redirect()->route('admin.Dashboard')->with('success','تم تسجيل الخروج');
             
         }else{
 
-            return redirect()->route('admin.login')->with('error','Invalid Login');
+            return redirect()->route('admin.login')->with('error','تحقق من إسم المستخدم و كلمة المرور ');
         }
 
     }
@@ -87,7 +87,7 @@ class AdminController extends Controller
     public function AdminLogout(){
 
         Auth::guard('admin')->logout();
-        return redirect()->route('admin.login')->with('success','Logout Successfully');
+        return redirect()->route('admin.login')->with('success','تم تسجيل الخروج ');
     }
     //End Method
 

@@ -56,8 +56,8 @@
 											</div>
 										</div>
 									</div>
-									<a class="dropdown-item" href="{{ route('admin.profile') }}"><i class="bx bx-cog"></i> Edit Profile</a>
-									<a class="dropdown-item" href="{{ route('admin.logout') }}"><i class="bx bx-log-out"></i> Log Out</a>
+									<a class="dropdown-item" href="{{ route('admin.profile') }}"><i class="bx bx-cog"></i> إعدادات الحساب </a>
+									<a class="dropdown-item" href="{{ route('admin.logout') }}"><i class="bx bx-log-out"></i> تسجيل خروج </a>
 								</div>
 							</div>
 							
