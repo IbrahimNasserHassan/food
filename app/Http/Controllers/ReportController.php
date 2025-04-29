@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderD;
 use App\Models\Customer;
+use App\Models\services;
 
 class ReportController extends Controller
 {
     //
-// أو الموديل اللي بيخزن المنتجات داخل الطلب
 
 // public function salesReport()
 // {
@@ -76,8 +76,50 @@ public function SalesReport(Request $request)
 
     return view('admin.report.report', compact('orders', 'customers', 'total_sales', 'total_cost', 'total_profit'));
 }
+    // End Method
 
 
+
+
+
+
+    public function ServicesReport(Request $request){
+
+        //Relations
+        $query = services::when('created_at');
+
+        if ($request->filled('from_date')) {
+            $query->whereDate('created_at', '>=', $request->from_date);
+        }
+    
+    
+    
+        if ($request->filled('to_date')) {
+            $query->whereDate('created_at', '<=', $request->to_date);
+        }
+        
+        $orders = $query->get();
+
+    
+
+        $services = services::all();
+
+
+        $totalCost = 0;
+
+        $Service_price= services::sum('Service_price');
+        $requirment= services::sum('requirment');
+
+
+        $subtotal = $Service_price- $requirment;
+
+        $total_profit= $Service_price- $requirment;
+
+
+        return view('admin.report.ServicesReport',compact('services','total_profit','subtotal'));
+
+    }
+    // End Method
 
 
 }; 

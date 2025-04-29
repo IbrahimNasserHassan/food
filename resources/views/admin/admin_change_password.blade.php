@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@section('title')
+تغير كلمة المرو
+@endsection
 @section('css')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
@@ -19,7 +22,7 @@
 
 <br>
 <div>
-    <a href="{{ route('admin.profile') }}"><i class="btn btn-dark">Back</i></a>
+    <a href="{{ route('admin.profile') }}"><i class="btn btn-dark">رجوع</i></a>
     
 </div>
 <br>
@@ -29,7 +32,7 @@
             <div class="card mg-b-20">
                 <div class="card-body">
                     <div class="pl-0">
-                        <h5 class="mb-sm-0 font-size-50">Change Password</h5><br>
+                        <h5 class="mb-sm-0 font-size-50">تغير كلمة المرور </h5><br>
                         <div class="main-profile-overview">
                             <div class="main-img-user profile-user">
                                 <img alt="" src="{{ (!empty($profileData->photo)) ? url('upload/admin_images/'.$profileData->photo) : 
@@ -59,7 +62,7 @@
                         <ul class="nav nav-tabs profile navtab-custom panel-tabs">
                         
                             <li class="">
-                                <a href="#settings" data-toggle="tab" aria-expanded="false"> <span class="visible-xs"><i class="las la-cog tx-16 mr-1"></i></span> <span class="hidden-xs">SETTINGS</span> </a>
+                                <a href="#settings" data-toggle="tab" aria-expanded="false"> <span class="visible-xs"><i class="las la-cog tx-16 mr-1"></i></span> <span class="hidden-xs">إعدادت كلمة المرور</span> </a>
                             </li>
                         </ul>
                     </div>
@@ -70,7 +73,7 @@
                             <form action="{{ route('admin.password.update') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="FullName">Old Password</label>
+                                    <label for="FullName"> كلمة المرور القديمة</label>
                                     <input type="password" name="old_password"  id="old_password"
                                     class="form-control 
                                     @error('old_password')
@@ -81,7 +84,7 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label for="FullName">New Password</label>
+                                    <label for="FullName">كلمة المرور الجديدة </label>
                                     <input type="password" name="new_password"  id="new_password"
                                     class="form-control 
                                     @error('new_password')
@@ -92,7 +95,7 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label for="FullName">Confirm New Password</label>
+                                    <label for="FullName">  تأكيد كلمة المرو الجيدة</label>
                                     <input type="password" name="new_password_confirmation"  id="new_password_confirmation"
                                     class="form-control 
                                     @error('new_password_confirmation')
@@ -104,7 +107,7 @@
                                 </div>
                             
                                 <div class="mt-4">
-                                    <button class="btn btn-primary waves-effect waves-light" type="submit">Save Changes</button>
+                                    <button class="btn btn-primary waves-effect waves-light" type="submit">حفظ التغيرات </button>
                                 </div>
 
                             </form>

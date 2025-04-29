@@ -116,6 +116,7 @@ Route::get('/admin/customer/order-delete/{id}',[OrderController::class, 'OrderDe
 
 //Report Route
 Route::get('/admin/report',[ReportController::class, 'SalesReport'])->name('admin.report');
+Route::get('/admin/report-services',[ReportController::class, 'ServicesReport'])->name('admin.report.services');
 
 
 
@@ -133,6 +134,7 @@ Route::get('/admin/service-details/{id}',[ServicesController::class, 'serviceDet
 Route::get('/admin/suppliers',[SupplierController::class, 'index'])->name('admin.supplier.index');
 Route::get('/admin/create-supplier',[SupplierController::class, 'create'])->name('admin.supplier.create');
 Route::post('/admin/store-supplier',[SupplierController::class, 'StoreSupplier'])->name('admin.supplier.store');
+Route::get('/admin/supplier-details/{id}',[SupplierController::class, 'SupplierDetails'])->name('admin.supplier.details');
 Route::get('/admin/supplier-delete/{id}',[SupplierController::class, 'SupplierDelete'])->name('admin.supplier.delete');
 
 

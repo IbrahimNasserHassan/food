@@ -9,32 +9,27 @@
 @endsection
 @section('content')
 	
-<div class="row padding: 20px;">
 	<div class="row bg-white">
 		<div class="main-signup-header">
+	@if ($errors->any())
+	@foreach ($errors->all() as $error)
+		<div class="alert alert-danger" role="alert">
+			{{ $error }}
+		</div>
+		
+	@endforeach
+	
+@endif
+
+@if (Session::has('error'))
+	<div class="alert alert-danger">{{ Session::get('error') }}</div>
+@endif
+
+@if (Session::has('success'))
+	<div class="alert alert-success">{{ Session::get('success') }}</div>
+@endif
+	
 			<h2>تسجيل الدخول!</h2>
-		            @if ($errors->any())
-                        @foreach ($errors->all() as $error)
-                            <div class="alert alert-danger" role="alert">
-                                {{ $error }}
-                            </div>
-                            
-                        @endforeach
-                        
-                    @endif
-                
-                    @if (Session::has('error'))
-                        <div class="alert alert-danger">{{ Session::get('error') }}</div>
-                    @endif
-                
-                    @if (Session::has('success'))
-                        <div class="alert alert-success">{{ Session::get('success') }}</div>
-                    @endif
-
-
-					
-
-
 
 						<form action="{{ route('admin.login_submit') }}" method="POST" class="row g-6">
                           @csrf
@@ -56,12 +51,12 @@
                           <div class="col-12">
                             <div class="form-check">
                               <a href="{{ route('admin.forget_Password') }}">هل نسيت كلمة السر ؟ </a>
-                            </div>
+                            </div> <br>
                           </div>
-													<button type="submit" class="btn btn-primary">تسجيل الدخول</button>
-												</form>
-											</div>
-										</div>
+						<button type="submit" class="btn btn-primary">تسجيل الدخول</button>
+					</form>
+				</div>
+			</div>
 						</div><!-- End -->
 					</div>
 			

@@ -57,17 +57,17 @@
                     <input type="text" name="email" value="{{ $email }}">
                 
                     <div class="col-md-6">
-                        <label for="exampleInputPassword" class="form-label">New Password</label>
+                        <label for="exampleInputPassword" class="form-label">كلمة المرو الجديدة </label>
                         <input type="password" name="password" class="form-control" id="exampleInputPassword1"  >
                       </div>
                       
                       <div class="col-md-6">
-                        <label for="exampleInputPassword" class="form-label">Confirm New Password</label>
+                        <label for="exampleInputPassword" class="form-label">  تأكيد كلمة المرور الجديدة</label>
                         <input type="password" name="password_confirmation" class="form-control" id="exampleInputPassword1"  >
                       </div>
                       
                       <div class="col-12">
-                        <button class="btn btn-primary" type="submit">Submit</button>
+                        <button class="btn btn-primary" type="submit">حفظ</button>
                       </div>
                     </form>
 											</div>

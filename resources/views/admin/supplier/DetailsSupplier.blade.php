@@ -36,103 +36,58 @@ $profilData = App\Models\Admin::find($id);
 
 <div class="row row-sm">
     <div>
-        <a href="{{ route('admin.services.index') }}" class="btn btn-sm btn-dark float-right ">
+        <a href="{{ route('admin.supplier.index') }}" class="btn btn-sm btn-dark float-right ">
             <i class="fa fa-arrow-right"></i> رجوع
         </a>
     </div>
     <br>
-    
-    <div class="col-md-12 col-xl-12">
-		<div id="invoiceArea">
-        <div class="main-content-body-invoice">
-            <div class="card card-invoice">
+
+
+    <div class="col-9">
+        <div class="card card-secondary">
+            <div class="card-header pb-0">
+                <h2 class="card-title mb-0 pb-0">{{ $suppliers->supplier_name }} - {{ $suppliers->supplier_address }}</h2> 
+                <h2 class="card-title mb-0 pb-0"></h2><br>
+
+            </div>
+            <div class="card-body text-secondary">
                 <div class="card-body">
-                    <div class="invoice-header">
-                        <h1 class="invoice-title">GadooraItech</h1>
-
-                        <div class="main-img-user">
-                            <img alt="" src="{{ !empty($profilData->photo) ? url('upload/admin_images/'.$profilData->photo) : url('upload/DCT.png') }}">
-                        </div>
-
-                    </div>
-
-                        <div class="col-md">
-                            <label class="tx-gray-600">بيانات الخدمة</label>    
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-md-6">
-                            <h5><i class="fa fa-building"></i> الجهة المستفيدة:</h5>
-                            <p>{{ $service->company }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <h5><i class="fa fa-calendar"></i> تاريخ تقديم الخدمة:</h5>
-                            <p>{{ $service->date }}</p>
-                        </div>
-                    </div>
-                    
-                    <div class="table-responsive mg-t-10">
-                        <table class="table table-invoice border text-md-nowrap mb-0">
-                            <thead class="table-active">
+                    <div class="table-responsive">
+                        <table class="table text-md-nowrap" id="example2">
+                            <thead>
                                 <tr>
-                                    <th class="wd-20p">نوع الخدمة</th>
-                                    <th class="tx-right">متطلبات الخدمة</th>
-                                    <th class="tx-right">سعر الخدمة </th>
-
+                                    <th class="wd-15p border-bottom-0">الاسم</th>
+                                    <th class="wd-20p border-bottom-0">الكمية</th>
+                                    <th class="wd-20p border-bottom-0">السعر</th>
+                                    <th class="wd-10p border-bottom-0">  تاريخ التوريد : </th>
+                                    
                                 </tr>
                             </thead>
-                            <tbody>
+                        @foreach ( $suppliers->products as $supplier )
 
-                                    <tr>
-                                        <td>{{ $service->Service_type }}</td>
-                                        <td class="tx-right">{{ $service->requirment }}</td>
-                                        <td class="tx-right">
-                                            <span class="badge badge-success" style="font-size: 14px;">
-                                                {{ number_format($service->Service_price) }} جنيه
-                                            </span>
-                                        </td>
-                                                                            </tr>
+                        <tr>
+                            <td>{{ $supplier->name }}</td>
+                            <td>{{ $supplier->quantity }}</td>
+                            <td>{{ number_format($supplier->PriceSalse) }}</td>
+                            <td>{{ $supplier->created_at->format('d-m-Y') }}</td>
 
-								<tr>
-									<div class="container text-center">
-										<div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-										<div class="col">
-											<div class="p-3">
-												
-											</div>
-										</div>
-										</div>
-										
-									</td>
-								</tr>
-								<tr>
-									<td colspan="3" class="tx-center  tx-uppercase tx-bold tx-inverse"> </td>
-                                    
-								</tr>
-							</tbody>
-                        </table>
-                    
-					</div> <br>
-					<div class="invoice-notes tx-center">
-						<p> GadooraItech</p>
-						هواتفنا:{{ $profilData->phone }} - 
-						موقعنا:   {{ $profilData->address }}
-					</div>
-                    <br>
-				</div>
-			</div>
-		</div>
-		</div>
-		<div class="card-footer">
-				<div class="d-flex justify-content-between">
-					
-					<a href="#" onclick="printInvoice()" class="btn btn-danger float-left mt-3 mr-2">
-						<i class="mdi mdi-printer ml-1"></i> طباعة
-					</a>
+                        </tr>
+                        @endforeach
+
+                    </tbody>
+                </table>
+                    </div>
                 </div>
+            </div>
+            </div>
+            <div class="card-footer">
+            رقم الهاتف : {{ $suppliers->supplier_phone }}
             </div>
         </div>
     </div>
+
+
+
 </div>
 </div>
 @endsection

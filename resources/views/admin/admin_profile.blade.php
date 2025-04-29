@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@section('title')
+المعلومات الشخصية
+@endsection
 @section('css')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
@@ -23,7 +26,7 @@
         <div class="col-lg-12">
             <div class="card mg-b-20">
                 <div class="card-body">
-                    <h5 class="mb-sm-0 font-size-50">Change Profilr Info</h5><br>
+                    <h5 class="mb-sm-0 font-size-50"> المعلومات الشخصية  </h5><br>
 
                     <div class="pl-0">
                         <div class="main-profile-overview">
@@ -33,14 +36,14 @@
                             </div>
                             <div class="d-flex justify-content-between mg-b-20">
                                 <div>
-                                    <h5 class="main-profile-name">{{ $profileData->name }}</h5>
-                                    <p class="main-profile-name-text">{{ $profileData->email }}</p>
-                                    <p class="main-profile-name-text">{{ $profileData->address }}</p>
-                                    <p class="main-profile-name-text">{{ $profileData->phone }}</p>
+                                    <h5 class="main-profile-name"> الإسم : {{ $profileData->name }}</h5>
+                                    <p class="main-profile-name-text">البريد الإلكتروني :{{ $profileData->email }}</p>
+                                    <p class="main-profile-name-text"> العنوان : {{ $profileData->address }}</p>
+                                    <p class="main-profile-name-text"> رقم الهاتف : {{ $profileData->phone }}</p>
 
                                 </div>
                             </div>
-                            <h6>Bio</h6>
+                            <h6></h6>
                             <div class="main-profile-bio">
                             </div><!-- main-profile-bio -->
                         
@@ -62,7 +65,7 @@
                         <ul class="nav nav-tabs profile navtab-custom panel-tabs">
                         
                             <li class="">
-                                <a href="#settings" data-toggle="tab" aria-expanded="false"> <span class="visible-xs"><i class="las la-cog tx-16 mr-1"></i></span> <span class="hidden-xs">SETTINGS</span> </a>
+                                <a href="#settings" data-toggle="tab" aria-expanded="false"> <span class="visible-xs"><i class="las la-cog tx-16 mr-1"></i></span> <span class="hidden-xs">تعديل المعلومات الشخصية </span> </a>
                             </li>
                         </ul>
                     </div>
@@ -73,23 +76,23 @@
                             <form action="{{ route('admin.profile.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="FullName">Full Name</label>
+                                    <label for="FullName">الإسم </label>
                                     <input type="text" name="name" value="{{ $profileData->name }}" id="name" class="form-control">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="Email">Email</label>
+                                    <label for="Email">البريد الإلكتروني</label>
                                     <input type="email" name="email" value="{{ $profileData->email }}" id="Email" class="form-control">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="Username">phone</label>
+                                    <label for="Username">رقم الهاتف</label>
                                     <input type="text"  value="{{ $profileData->phone }}" id="" name="phone" class="form-control">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="Username">Address</label>
+                                    <label for="Username">العنوان</label>
                                     <input type="text" name="address" value="{{ $profileData->address }}" id="" class="form-control">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="Username">Profile Photo</label>
+                                    <label for="Username"> الصورة الشـخصـيـة</label>
                                     <input type="file" name="photo" value="" id="image" class="form-control">
                                 </div>
 
@@ -99,12 +102,12 @@
                                 class="rounded-circle p-1 bg-primary" width="110">
                                     
                                 <div>
-                                    <a href="{{ route('admin.change.password') }}"><i class="btn btn-danger"> ! Change Paasword</i></a>
+                                    <a href="{{ route('admin.change.password') }}"><i class="btn btn-danger"> تغيـر كـلمـة المـرور ! </i></a>
                                 </div>
 
                                 </div>
                                 <div class="mt-4">
-                                    <button class="btn btn-primary waves-effect waves-light" type="submit">Save Changes</button>
+                                    <button class="btn btn-primary waves-effect waves-light" type="submit">حـفـظ الـتـغـيرات </button>
                                 </div>
 
                             </form>

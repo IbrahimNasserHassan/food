@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@section('title')
+تعديل المنتج
+@endsection
 @section('css')
 @endsection
 @section('page-header')
@@ -30,17 +33,16 @@
                                             <input type="text" name="name" class="form-control" id="inputName" value="{{ $product->name }}">
                                         </div>
                                         
-                                    
                                         <div class="form-group">
                                             الكمية :
                                             <input type="number" name="quantity" class="form-control" id="" value="{{ $product->quantity }}">
                                         </div>
                                         <div class="form-group">
-                                            سعر البيع :
+                                            سعر الشراء :
                                             <input type="number" name="PriceSalse" class="form-control" id="inputName" value="{{ $product->PriceSalse }}">
                                         </div>
                                         <div class="form-group">
-                                            سعر الشراء :
+                                            سعر البيع :
                                             <input type="number" name="PriceBuy" class="form-control" id="inputName" value="{{ $product->PriceBuy }}">
                                         </div>
                                         </div>

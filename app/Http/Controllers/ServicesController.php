@@ -64,6 +64,8 @@ class ServicesController extends Controller
      */
     public function serviceDetails($id)
     {
+
+
         $service=services::find($id);
 
         return view('admin.services.DetailsService',compact('service'));

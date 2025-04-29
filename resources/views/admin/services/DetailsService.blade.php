@@ -76,7 +76,7 @@ $profilData = App\Models\Admin::find($id);
                             <thead class="table-active">
                                 <tr>
                                     <th class="wd-20p">نوع الخدمة</th>
-                                    <th class="tx-right">متطلبات الخدمة</th>
+                                    <th class="tx-right"> تكلفة الخدمة</th>
                                     <th class="tx-right">سعر الخدمة </th>
 
                                 </tr>
@@ -85,13 +85,15 @@ $profilData = App\Models\Admin::find($id);
 
                                     <tr>
                                         <td>{{ $service->Service_type }}</td>
-                                        <td class="tx-right">{{ $service->requirment }}</td>
+                                        <td class="tx-right"><span class="badge badge-dark" style="font-size: 14px;">
+                                            {{ number_format($service->requirment) }} جنيه
+                                        </span></td>
                                         <td class="tx-right">
                                             <span class="badge badge-success" style="font-size: 14px;">
                                                 {{ number_format($service->Service_price) }} جنيه
                                             </span>
                                         </td>
-                                                                            </tr>
+                                    </tr>
 
 								<tr>
 									<div class="container text-center">
@@ -106,7 +108,9 @@ $profilData = App\Models\Admin::find($id);
 									</td>
 								</tr>
 								<tr>
-									<td colspan="3" class="tx-center  tx-uppercase tx-bold tx-inverse"> </td>
+									<td colspan="3" class="tx-right bg-light  tx-uppercase tx-bold tx-inverse"> صافي الربح:
+                                        {{ number_format($service->Service_price - $service->requirment ) }} جنيه
+                                    </td>
                                     
 								</tr>
 							</tbody>

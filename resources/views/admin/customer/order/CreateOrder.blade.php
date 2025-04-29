@@ -52,7 +52,7 @@
                 </div>
                 @else
                 <div class="mb-3">
-                    <label for="customer_id" class="form-label">إسم العميل</label>
+                    
                     <select class="form-select" id="customer_id" name="customer_id" required>
                         <option value="">اختر العميل</option>
                         @foreach($customers as $cust)
@@ -109,15 +109,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-light">
-                <h5 class="modal-title" id="exampleModalLabel">اختيار المنتج</h5>
+                <h5 class="modal-title" id="exampleModalLabel">تحديد المنتج</h5>
             </div>
             <div class="modal-body">
                 <select id="product-select" class="form-select">
-                    <option value="">اختر منتج من القائمة</option>
+                    
                 
                     @foreach($products as $product)
                     <option value="{{ $product->id }}" data-name="{{ $product->name }}" data-price="{{ $product->price }}">
-                        {{ $product->name }} - ({{ $product->PriceSalse }} جنيه) 
+                        {{ $product->name }} - ({{ number_format($product->PriceSalse) }} جنيه) 
                     </option>
                     @endforeach
                 </select>

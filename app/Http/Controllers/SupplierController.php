@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 
@@ -61,9 +62,16 @@ class SupplierController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Supplier $supplier)
+    public function SupplierDetails(Supplier $supplier,$id)
     {
-        //
+        $product=Product::all();
+
+        $total_Barchaces=0;
+        
+        
+        $suppliers=Supplier::with(['products', 'products'])->find($id);
+        return view('admin.supplier.DetailsSupplier',compact('suppliers','product','total_Barchaces'));
+
     }
 
     /**

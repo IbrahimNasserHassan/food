@@ -40,7 +40,6 @@
 							<div class="card-body">
 								<div class="main-content-label mg-b-5">
 								</div>
-								<div></div>
                                     <!-- Button trigger modal -->
                                     <a href="" type="button" class="btn btn-sm btn-primary " data-bs-toggle="modal" id="myModal" data-bs-target="#exampleModal">
                                     <i class="fa fa-plus"> إضافة صنف</i>
@@ -62,7 +61,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
                                             <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> أضافة الصنف</button>
                                         </div>
-                                    </form>
+                                            </form>
                                         </div>
                                     </div>
                                     </div>

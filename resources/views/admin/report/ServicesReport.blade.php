@@ -9,14 +9,14 @@
 <link href="{{URL::asset('assets/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
 @endsection
 @section('title')
-تقرير المبيعات
+تقرير الخدمات
 @endsection
 @section('page-header')
 				<!-- breadcrumb -->
 				<div class="breadcrumb-header justify-content-between">
 					<div class="my-auto">
 						<div class="d-flex">
-							<h4 class="content-title mb-0 my-auto">التقارير</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/  تقرير المبيعات</span>
+							<h4 class="content-title mb-0 my-auto">التقارير</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/  تقرير الخدمات</span>
 						</div>
 					</div>
 				
@@ -31,20 +31,10 @@
     $profilData = App\Models\Admin::find($id);
     @endphp
     <!-- Filters -->
-            
-        <form method="GET" action="{{ route('admin.report') }}" class="mb-4">
+{{--             
+        <form method="GET" action="{{ route('admin.report.services') }}" class="mb-4">
             <div class="row g-3 align-items-end">
-                <div class="col-md-4">
-                    <label for="customer_id" class="form-label">العميل</label>
-                    <select name="customer_id" id="customer_id" class="form-select">
-                        <option value="">كل العملاء</option>
-                        @foreach($customers as $customer)
-                            <option value="{{ $customer->id }}" {{ request('customer_id') == $customer->id ? 'selected' : '' }}>
-                                {{ $customer->CustomerName }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+            
                 <div class="col-sm-3">
                     <label for="from_date" class="form-label">من تاريخ</label>
                     <input type="date" name="from_date" id="from_date" class="form-control" value="{{ request('from_date') }}">
@@ -54,10 +44,10 @@
                     <input type="date" name="to_date" id="to_date" class="form-control" value="{{ request('to_date') }}">
                 </div>
                 <div class="col-sm-2">
-                    <button type="submit" class="btn btn-primary btn-sm">بحث</button>
+                    <button type="submit" class="btn btn-light btn-sm">بحث</button>
                 </div>
             </div>
-        </form>
+        </form> --}}
     </div>
 
     <div class="mb-3">
@@ -74,7 +64,7 @@
                     
         </div>
         <div>
-            <h4> تقرير المبيعات  <br>
+            <h4> تقرير الخدمات  <br>
                 التاريخ : {{ date('d/m/Y') }}</h4>
         </div>
         <div class="table-responsive">
@@ -82,49 +72,44 @@
         
             <thead class="table-dark">
                 <tr>
-                    <th class="text-light">#</th>
-                    <th class="text-light">العميل</th>
+                    <th class="text-light">الخدمة</th>
+                    <th class="text-light">الجهة المستفيدة</th>
                     <th class="text-light">التاريخ</th>
-                    <th class="text-light">الإجمالي</th>
                     <th class="text-light">الربح</th>
-                    <th class="text-light">المنتجات</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($orders as $order)
-                    <tr>
-                        <td>{{ $order->id }}</td>
-                        <td>{{ $order->customer->CustomerName }}</td>
-                        <td>{{ $order->created_at->format('Y-m-d') }}</td>
-                        <td>{{ number_format($order->total_amount, 2) }}</td>
-                        <td>{{ number_format($order->items->sum(function($item) {
-                            return ($item->price - $item->product->PriceBuy) * $item->quantity;
-                        }), 2) }}</td>
-                        <td>
-                            <ul>
-                                @foreach($order->items as $item)
-                                    <li>{{ $item->product->name }} × {{ $item->quantity }} ({{ number_format($item->price, 2) }})</li>
-                                @endforeach
-                            </ul>
-                        </td>
-                    </tr>
+                @foreach ( $services as $service)
                     
+                    <tr>
+                        <td>{{ $service->Service_type }}</td>
+                        <td>{{ $service->company }}</td>
+                        <td>{{ $service->date }}</td>
+                        <td>
+                            {{ number_format($subtotal =  $service->Service_price  - $service->requirment)  }}
+                        </td>
+                    
+
+                    </tr>
                 @endforeach
-                
+
+
+                <td></td>
+                <td><tr></tr></td>
                 <tr>
-                    <td class="header-dark">
-                        <div class="card-header bg-dark text-light">إجمالي المبيعات</div>
-                            <h5 class="card-title">{{ number_format($total_sales, 2) }} جنيه</h5>
-                        </div>
+                    <td class="card-header dark">
 
                         <div class="card-header bg-dark text-light">إجمالي الأرباح</div>
-                            <h5 class="card-title ">{{ number_format($total_profit, 2) }} جنيه</h5>
+                            <h5 class="card-title">{{ number_format($total_profit ) }} جنيه</h5>
+
                         </div>
                             
                             </div>
-                        </div>
+    </div> 
+                        {{-- End of Print --}}
                     </td>
                 </tr>
+
             </tbody>
         </table>
         
@@ -146,6 +131,8 @@
         });
     });
 </script>
+
+
 
 <script>
     function printInvoice() {

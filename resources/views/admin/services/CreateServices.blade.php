@@ -45,8 +45,9 @@
                                             <input type="text" name="company" class="form-control" id="" placeholder="الجهة المستفيدة">
                                         </div>
 
-										<div class="form-group">
-                                            <textarea type="Note" name="requirment" class="form-control" id="" placeholder="المتطلبات "></textarea>
+
+                                        <div class="form-group"> 
+                                            <input type="number" name="requirment" step="0.01" class="form-control" id="" placeholder="تكلفة الخدمة ">
                                         </div>
 
 
