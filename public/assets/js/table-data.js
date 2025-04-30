@@ -23,7 +23,7 @@ $(function(e) {
 	$('#example2').DataTable({
 		responsive: true,
 		language: {
-			searchPlaceholder: 'Search...',
+			searchPlaceholder: 'بحث...',
 			sSearch: '',
 			lengthMenu: '_MENU_',
 		}

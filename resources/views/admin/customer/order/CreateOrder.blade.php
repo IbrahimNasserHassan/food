@@ -63,6 +63,42 @@
                         @endforeach
                     </select>
                 </div>
+{{-- 
+                <button type="button" class="btn btn-sm btn-primary" id="open-product-modal"><i class="fa fa-check"></i> تحديد عميل</button>  
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-md"> 
+                        <div class="modal-content">
+                            <div class="modal-header bg-light">
+                                <h5 class="modal-title" id="exampleModalLabel">تحديد المنتج</h5>
+                            </div>
+                            <div class="modal-body">
+                                <input type="text" id="product-search" class="form-control mb-3" placeholder="ابحث عن منتج...">
+                                <table class="table table-bordered" id="product-table">
+                                    <thead>
+                                        <tr>
+                                            <th>اسم العميل</th>
+                                            <th>رقم الهاتف</th>
+                                            <th>#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($customers as $cust)
+                                        
+                                        <tr data-id="{{ $cust->id }}" data-name="{{ $cust->CustomerName }}" data-price="">
+                                            <td>{{ $cust->CustomerName }}</td>
+                                            <td>{{ $cust->CustomerPhone[0] }}</td>
+                                            <td><button type="button" class="btn btn-sm btn-primary select-product">اختيار</button></td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
                 @endif
             </div>
         </div>
@@ -106,32 +142,42 @@
 </form>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered modal-md"> 
         <div class="modal-content">
             <div class="modal-header bg-light">
                 <h5 class="modal-title" id="exampleModalLabel">تحديد المنتج</h5>
             </div>
             <div class="modal-body">
-                <select id="product-select" class="form-select">
-                    
-                
-                    @foreach($products as $product)
-                    <option value="{{ $product->id }}" data-name="{{ $product->name }}" data-price="{{ $product->price }}">
-                        {{ $product->name }} - ({{ number_format($product->PriceSalse) }} جنيه) 
-                    </option>
-                    @endforeach
-                </select>
+                <input type="text" id="product-search" class="form-control mb-3" placeholder="ابحث عن منتج...">
+                <table class="table table-bordered" id="product-table">
+                    <thead>
+                        <tr>
+                            <th>اسم المنتج</th>
+                            <th>السعر</th>
+                            <th>#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($products as $product)
+                        <tr data-id="{{ $product->id }}" data-name="{{ $product->name }}" data-price="{{ $product->PriceBuy }}">
+                            <td>{{ $product->name }}</td>
+                            <td>{{ number_format($product->PriceBuy) }}</td>
+                            <td><button type="button" class="btn btn-sm btn-primary select-product">اختيار</button></td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
-                <button type="button" class="btn btn-primary" id="add-product-modal">إضافة المنتج</button>
             </div>
         </div>
     </div>
 </div>
+
 <!-- Scripts -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const productModal = new bootstrap.Modal(document.getElementById('exampleModal'));
     const productList = document.getElementById('product-list');
     let productIndex = 0;
@@ -140,35 +186,41 @@ document.addEventListener('DOMContentLoaded', function() {
         productModal.show();
     });
 
-    document.getElementById('add-product-modal').addEventListener('click', function() {
-        const select = document.getElementById('product-select');
-        const selectedOption = select.options[select.selectedIndex];
 
-        if (!selectedOption.value) {
-            alert('الرجاء اختيار منتج أولاً');
-            return;
-        }
+    // لما أحدد المنتج
+    document.querySelectorAll('.select-product').forEach(button => {
+        button.addEventListener('click', function () {
+            const row = this.closest('tr');
+            const id = row.dataset.id;
+            const name = row.dataset.name;
+            const price = row.dataset.price;
 
-        const id = selectedOption.value;
-        const name = selectedOption.dataset.name;
-        const price = selectedOption.dataset.price;
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>
+                    ${name}
+                    <input type="hidden" name="products[${productIndex}][id]" value="${id}">
+                    <button type="button" class="btn btn-sm btn-danger remove-product float-end">×</button>
+                </td>
+                <td><input type="number" name="products[${productIndex}][quantity]" class="form-control quantity" min="1" value="1"></td>
+                <td><input type="number" name="products[${productIndex}][price]" class="form-control price" value="${price}"></td>
+                <td><input type="text" class="form-control subtotal" readonly></td>
+            `;
 
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `
-            <td>
-                ${name} <input type="hidden" name="products[${productIndex}][id]" value="${id}">
-                <button type="button" class="btn btn-sm btn-danger remove-product float-end">×</button>
-            </td>
-            <td><input type="number" name="products[${productIndex}][quantity]" class="form-control quantity" min="1" value="1"></td>
-            <input type="number" name="products[${productIndex}][price]" class="form-control price" value="${price}">
-            <td><input type="text" class="form-control subtotal" readonly></td>
-        `;
+            productList.appendChild(newRow);
+            productIndex++;
+            productModal.hide();
+            calculateTotal();
+        });
+    });
 
-        productList.appendChild(newRow);
-        productIndex++;
-        select.value = '';
-        productModal.hide();
-        calculateTotal();
+    // فلترة الجدول
+    document.getElementById('product-search').addEventListener('keyup', function () {
+        const value = this.value.toLowerCase();
+        document.querySelectorAll('#product-table tbody tr').forEach(row => {
+            const name = row.querySelector('td')?.textContent.toLowerCase() || '';
+            row.style.display = name.includes(value) ? '' : 'none';
+        });
     });
 
     // تعديل: نحسب الإجمالي لو الكمية أو السعر اتغير

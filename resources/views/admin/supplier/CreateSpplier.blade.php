@@ -54,7 +54,7 @@
                                         <div class="form-group mb-2 mt-9 justify-content">
                                             <div>
                                                 <button type="submit" class="btn btn-primary">حفظ</button>
-                                                <a href="#" class="btn btn-secondary"><i class="fa fa-cros">إلغاء</i></a>
+                                                <a href="{{ route('admin.supplier.index') }}" class="btn btn-secondary"><i class="fa fa-cros">إلغاء</i></a>
                                             </div>
                                         </div>
                                     </form>

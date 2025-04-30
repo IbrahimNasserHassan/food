@@ -7,6 +7,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\Websitemail;
 use App\Models\Admin;
+use App\Models\Product;
+use App\Models\Order;
+use App\Models\OrderDetails;
+use App\Models\Customer;
+
+
+
+
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Mail;
 
@@ -46,10 +54,17 @@ class AdminController extends Controller
     
 
 		$id = Auth::guard('admin')->id();
+
+        $total_customer= Customer::count();
+        $total_product= Product::count();
+        $total_invoices = order::count();
+        $order_paid = Order::where('payment_status', 'paid')->count();
+        $order_unpaid = Order::where('payment_status', 'unpaid')->count();
     
 		$profilData = Admin::find($id);
 
-        return view('admin.dashboard',compact('profilData'));
+        return view('admin.dashboard',compact('profilData','total_customer','total_product',
+            'order_paid','order_unpaid','total_invoices'));
     
     }
 
