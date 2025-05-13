@@ -35,14 +35,13 @@ $profilData = App\Models\Admin::find($id);
 @endphp
 
 <div class="row row-sm">
-    <div>
+    <div class="">
         <a href="{{ route('admin.customer.order.index') }}" class="btn btn-sm btn-dark float-right ">
             <i class="fa fa-arrow-left"></i> رجوع
         </a><br>
     </div>
-    <br>
     
-    <div class="col-md-12 col-xl-12">
+    <div class="card-md-12">
 		<div id="invoiceArea">
         <div class="main-content-body-invoice">
             <div class="card card-invoice">
@@ -50,7 +49,7 @@ $profilData = App\Models\Admin::find($id);
                     <div class="invoice-header">
                         <h1 class="invoice-title">GadooraItech</h1>
                         <div class="main-img-user">
-                            <img alt="" src="{{ !empty($profilData->photo) ? url('upload/admin_images/'.$profilData->photo) : url('upload/DCT.png') }}">
+                            <img alt="" class="h-16" src="{{ !empty($profilData->photo) ? url('upload/admin_images/'.$profilData->photo) : url('upload/DCT.png') }}">
                         </div>
 
                         <div class="billed-from">
@@ -58,7 +57,6 @@ $profilData = App\Models\Admin::find($id);
                             <p>الاسم: {{ $profilData->name }}<br>رقم هاتف: {{ $profilData->phone }}</p>
                         </div>
                     </div>
-
                     <div class="row mg-t-20">
                         <div class="col-md">
                             <label class="tx-gray-600">بيانات العميل</label>
@@ -77,8 +75,8 @@ $profilData = App\Models\Admin::find($id);
                     </div>
                     <div class="table-responsive mg-t-10">
                         <table class="table table-invoice  border text-md-nowrap mb-0">
-                            <thead class="table-active">
-                                <tr>
+                            <thead class="table-active text-white">
+                                <tr class="bg-inverse">
                                     <th class="wd-20p">إسم المنتج</th>
                                     <th class="tx-center">الكمية</th>
                                     <th class="tx-right">السعر</th>
@@ -87,7 +85,7 @@ $profilData = App\Models\Admin::find($id);
                             </thead>
                             <tbody>
                                 @foreach ($orderDetails as $details)
-                                    <tr>
+                                    <tr class="g-blue-100 text-blue-800">
                                         <td>{{ $details->product->name ?? 'غير معروف' }}</td>
                                         <td class="tx-center">{{ number_format($details->quantity) }}</td>
                                         <td class="tx-right">{{ number_format($details->price) }}</td>
@@ -126,18 +124,28 @@ $profilData = App\Models\Admin::find($id);
                         </table>
                     
 					</div> <br>
-					<div class="invoice-notes tx-center">
-						<p>هذه الفاتورة تم إنشاؤها من قبل نظام GadooraItech</p>
-						هواتفنا:{{ $profilData->phone }} - 
-						موقعنا:   {{ $profilData->address }}
-					</div>
+                    
+                    <div class="text-">
+                        التوقيع:............................................................................................................
+                    </div>
+                    <div class="">
+
+                    </div>
 				</div>
+                <div class="card card-secondary">
+                <div class="r">                    <p>
+                    هواتفنا : {{ $profilData->phone }} | 0996325732</p>
+                    <p class="text-right">
+                    موقعنا :   {{ $profilData->address }} | تقاطع الأبراج
+
+                    </p>
+                </div>
+                </div>
 			</div>
 		</div>
 		</div>
 		<div class="card-footer">
 				<div class="d-flex justify-content-between">
-					
 					<a href="#" onclick="printInvoice()" class="btn btn-danger float-left mt-3 mr-2">
 						<i class="mdi mdi-printer ml-1"></i> طباعة
 					</a>
@@ -145,8 +153,6 @@ $profilData = App\Models\Admin::find($id);
             </div>
         </div>
     </div>
-</div>
-</div>
 @endsection
 
 @section('js')

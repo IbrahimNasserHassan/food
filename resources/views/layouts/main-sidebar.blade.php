@@ -11,6 +11,8 @@
 							@php
 								$id = Auth::guard('admin')->id();
 								$profilData = App\Models\Admin::find($id);
+								$id = Auth::guard('client')->id();
+								$profilData = App\Models\Client::find($id);
 							@endphp
 			<div class="main-sidemenu">
 				<div class="app-sidebar__user clearfix">

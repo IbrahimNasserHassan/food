@@ -63,7 +63,6 @@ Route::middleware('admin')->group(function(){
 
 
    // Product Routes
-Route::get('/admin/product',[productController::class, 'ProductIndex'])->name('admin.product.index');
 Route::get('/admin/product-create',[productController::class, 'CreateProduct'])->name('admin.product.create');
 Route::post('/admin/poduct-create-Store',[productController::class, 'CreateProductStore'])->name('admin.product.store');
 Route::get('/admin/product-edit/{id}',[productController::class, 'ProductEdit'])->name('admin.product.edit');
@@ -92,9 +91,6 @@ Route::get('/admin/customer-delete/{id}',[CustomerController::class, 'CustomerDe
 
     // Order Route
 Route::get('/admin/customer/order-index',[OrderController::class, 'Indexorder'])->name('admin.customer.order.index');
-Route::get('order/create', [OrderController::class, 'CreateOrder'])->name('admin.order.create');
-Route::get('/admin/customer/{customer}/order/create',[OrderController::class, 'CreateOrder'])->name('admin.customer.order.create');
-Route::post('/admin/Order-Store',[OrderController::class, 'StoreOrder'])->name('admin.order.store');
 
 
 
@@ -143,6 +139,22 @@ Route::get('/admin/supplier-delete/{id}',[SupplierController::class, 'SupplierDe
 
 
 });
+
+
+
+
+// Order Route
+Route::get('order/create', [OrderController::class, 'CreateOrder'])->name('admin.order.create');
+Route::get('/customer/{customer}/order/create',[OrderController::class, 'CreateOrder'])->name('admin.customer.order.create');
+Route::post('/Order-Store',[OrderController::class, 'StoreOrder'])->name('admin.order.store');
+
+// Product Route
+Route::get('/product',[productController::class, 'ProductIndex'])->name('admin.product.index');
+Route::get('order/create', [OrderController::class, 'CreateOrder'])->name('admin.order.create');
+
+
+
+
 
 // CLients Route
 Route::middleware('client')->group(function(){

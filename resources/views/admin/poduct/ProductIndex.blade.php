@@ -64,7 +64,9 @@
 												<td>{{ $product->name }}</td>
 												<td>{{ $product->category->CategoryName }}</td>
 												<td>{{ $product->quantity }}</td>
-												<td>{{ number_format($product->PriceSalse) }}</td>
+												<td>
+													{{ number_format($product->PriceSalse) }}
+												</td>
 												<td>{{ number_format($product->PriceBuy) }}</td>
 												<td>{{ $product->created_at->format('Y-m-d')  }} </td>
 

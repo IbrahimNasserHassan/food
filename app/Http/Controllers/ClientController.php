@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\Websitemail;
+use App\Models\Admin;
 use App\Models\Client;
+use App\Models\Product;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Mail;
 
@@ -16,7 +18,6 @@ class ClientController extends Controller
 {
     //
     public function ClientLogin(){
-
         return view('client.client_login');
 
     }
@@ -95,9 +96,15 @@ class ClientController extends Controller
     public function ClientDashboard(){
 
         $id = Auth::guard('client')->id();
-		$profilData = Client::find($id);
+        $id = Auth::guard('admin')->id();
 
-        return view('client.client_dashboard',compact('profilData'));
+		$profilData = Client::find($id);
+        $profilData = Admin::find($id);
+        $products=Product::all();
+
+
+
+        return view('client.client_dashboard',compact('profilData','products'));
     }
     //end Method
 

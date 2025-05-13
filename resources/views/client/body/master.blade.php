@@ -26,7 +26,7 @@
 				@yield('content')
 				@include('client.body.sidebar')
 				@include('client.body.models')
-            	@include('client.body.footer')
+            @include('client.body.footer')
 				@include('client.body.footer-scripts')	
 	</body>
 </html>

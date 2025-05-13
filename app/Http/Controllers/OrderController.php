@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Client;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ClientController;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\OrderDetails;
+use App\Models\User;
 
 class OrderController extends Controller
 {
@@ -92,7 +94,9 @@ class OrderController extends Controller
             $product->save();
         }
 
-
+        if(Auth::guard('client'))
+        return redirect()->route('client.Dashboard');
+        else
         
         return redirect()->route('admin.customer.order.index')->with('success', 'تم إنشاء الطلب بنجاح');
     }

@@ -1,5 +1,6 @@
 <!-- Title -->
-<!-- Favicon -->
+<title>@yield('titleclient')
+</title><!-- Favicon -->
 <link rel="icon" href="{{URL::asset('assets/img/brand/favicon.png')}}" type="image/x-icon"/>
 <!-- Icons css -->
 <link href="{{URL::asset('assets/css/icons.css')}}" rel="stylesheet">
