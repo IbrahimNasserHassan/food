@@ -1,262 +1,219 @@
 @extends('layouts.master')
-@section('title')
-إنشاء فاتورة
-@endsection
-@section('css')
-@endsection
-@section('page-header')
-<!-- breadcrumb -->
-<div class="breadcrumb-header justify-content-between">
-    <div class="my-auto">
-        <div class="d-flex">
-            <h4 class="content-title mb-0 my-auto">الفواتير</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ إنشاء فاتورة</span>
-        </div>
-    </div>
-</div>
-<!-- breadcrumb -->
-@endsection
+@section('title', 'إنشاء فاتورة')
+
 @section('content')
-@if(session('success'))
-<div class="alert alert-danger">
-    {{ session('success') }}
-</div>
-@endif
-@if(session('error'))
-<div class="alert alert-danger">
-    {{ session('error') }}
-</div>
-@endif
 <form action="{{ route('admin.order.store') }}" method="POST">
     @csrf
-    <div class="row" style="width: 18rem;">
+    <div class="mb-3" style="max-width: 18rem;">
         <label for="invoice_type" class="form-label">نوع الفاتورة:</label>
-        <select name="invoice_type" class="form-control">
+        <select name="invoice_type" id="invoice_type" class="form-control" required>
             <option value="unpaid">غير مدفوعة</option>
             <option value="paid">مدفوعة</option>
         </select>
-    </div><br>
-    <div class="col-sm-7">
-        <div class="card mg-b-20">
-            <div class="card-header bg-light">
-                <h2 class="mb-4">بيانات العميل</h2>
-            </div>
-            <div class="card-body">
-                @if(isset($fromCustomerPage) && $fromCustomerPage)
-                <input type="hidden" name="customer_id" value="{{ $customer->id }}">
-                <div class="mb-2">
-                    
-                    <input class="form-control" type="" value="{{ $customer->CustomerName }}" readonly>
-                    <label for=""></label>
-                    <input class="form-control" type="" value="{{ $customer->CustomerPhone[0] }}" readonly>
-                
-                </div>
-                @else
-                <div class="mb-3">
-                    
-                    <select class="form-select" id="customer_id" name="customer_id" required>
-                        <option value="">اختر العميل</option>
-                        @foreach($customers as $cust)
-                        <option value="{{ $cust->id }}">
-                            {{ $cust->CustomerName }} - 
-                            {{ is_array($cust->CustomerPhone) ? implode(' - ', $cust->CustomerPhone) : $cust->CustomerPhone }}
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
-{{-- 
-                <button type="button" class="btn btn-sm btn-primary" id="open-product-modal"><i class="fa fa-check"></i> تحديد عميل</button>  
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-md"> 
-                        <div class="modal-content">
-                            <div class="modal-header bg-light">
-                                <h5 class="modal-title" id="exampleModalLabel">تحديد المنتج</h5>
-                            </div>
-                            <div class="modal-body">
-                                <input type="text" id="product-search" class="form-control mb-3" placeholder="ابحث عن منتج...">
-                                <table class="table table-bordered" id="product-table">
-                                    <thead>
-                                        <tr>
-                                            <th>اسم العميل</th>
-                                            <th>رقم الهاتف</th>
-                                            <th>#</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($customers as $cust)
-                                        
-                                        <tr data-id="{{ $cust->id }}" data-name="{{ $cust->CustomerName }}" data-price="">
-                                            <td>{{ $cust->CustomerName }}</td>
-                                            <td>{{ $cust->CustomerPhone[0] }}</td>
-                                            <td><button type="button" class="btn btn-sm btn-primary select-product">اختيار</button></td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-                @endif
-            </div>
-        </div>
     </div>
-    <div class="col-xl-12">
-        <div class="card">
-            <div class="card-header pb-0">
-                <div class="d-flex justify-content-between">
-                    <h4 class="card-title mg-b-0"></h4>
-                    <i class="mdi mdi-dots-horizontal text-gray"></i>
-                </div>
-            </div>
-            <div class="card-body">
-                <ul id="search-results" class="list-group"></ul>
-                <div class="mb-3">
-                    <button type="button" class="btn btn-sm btn-success" id="open-product-modal"><i class="fa fa-plus"></i></button> إضافة منتج
-                    <br>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>المنتج</th>
-                                <th>الكمية</th>
-                                <th>السعر</th>
-                                <th>المجموع</th>
-                            </tr>
-                        </thead>
-                        <tbody id="product-list">
-                        </tbody>
-                    </table>
-                </div>
-                <div class="mb-3">
-                    <label for="total" class="form-label">إجمالي الفاتورة:</label>
-                    <input type="text" name="total_amount" id="total" class="form-control" readonly>
-                </div>
-                <br>
-                <input type="hidden" name="total_amount" id="hidden-total-amount">
-                <button type="submit" class="btn btn-success"><i class="fa fa-save"> حفظ الفاتورة</i></button>
-            </div>
-        </div>
+
+    <div class="mb-4">
+        <label for="customer_id" class="form-label">اختر العميل:</label>
+        <select name="customer_id" id="customer_id" class="form-control" required>
+            <option value="">اختر العميل</option>
+            @foreach($customers as $cust)
+                <option value="{{ $cust->id }}">{{ $cust->CustomerName }}</option>
+            @endforeach
+        </select>
     </div>
+
+    <div class="mb-3">
+        <button type="button" class="btn btn-primary" id="open-product-modal"><i class="fa fa-plus"></i> إضافة منتج</button>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>اسم المنتج</th>
+                <th>نوع البيع</th>
+                <th>الكمية</th>
+                <th>السعر</th>
+                <th>المجموع</th>
+                <th>حذف</th>
+            </tr>
+        </thead>
+        <tbody id="product-list"></tbody>
+    </table>
+
+    <div class="mb-3" style="max-width: 18rem;">
+        <label for="total_amount" class="form-label">إجمالي الفاتورة:</label>
+        <input type="text" id="total_amount_display" class="form-control" readonly>
+        <input type="hidden" name="total_amount" id="total_amount">
+    </div>
+
+    <button type="submit" class="btn btn-success">حفظ الفاتورة</button>
 </form>
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-md"> 
-        <div class="modal-content">
-            <div class="modal-header bg-light">
-                <h5 class="modal-title" id="exampleModalLabel">تحديد المنتج</h5>
-            </div>
-            <div class="modal-body">
-                <input type="text" id="product-search" class="form-control mb-3" placeholder="ابحث عن منتج...">
-                <table class="table table-bordered" id="product-table">
-                    <thead>
-                        <tr>
-                            <th>اسم المنتج</th>
-                            <th>السعر</th>
-                            <th>#</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($products as $product)
-                        <tr data-id="{{ $product->id }}" data-name="{{ $product->name }}" data-price="{{ $product->PriceBuy }}">
-                            <td>{{ $product->name }}</td>
-                            <td>{{ number_format($product->PriceBuy) }}</td>
-                            <td><button type="button" class="btn btn-sm btn-primary select-product">اختيار</button></td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
-            </div>
-        </div>
+
+<!-- Modal اختيار المنتج -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="productModalLabel">اختيار المنتج</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+      </div>
+      <div class="modal-body">
+        <input type="text" id="productSearch" class="form-control mb-3" placeholder="ابحث عن المنتج...">
+        <table class="table table-hover" id="productTable">
+          <thead>
+            <tr>
+              <th>اسم المنتج</th>
+              <th>سعر الجملة</th>
+              <th>سعر القطاعي</th>
+              <th>#</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach($products as $product)
+            <tr 
+                data-id="{{ $product->id }}"
+                data-name="{{ $product->name }}"
+                data-wholesale-price="{{ $product->wholesale_price }}"
+                data-retail-price="{{ $product->retail_price }}"
+                data-allows-retail="{{ $product->allows_retail ? '1' : '0' }}"
+            >
+              <td>{{ $product->name }}</td>
+              <td>{{ number_format($product->wholesale_price, 2) }}</td>
+              <td>{{ $product->allows_retail ? number_format($product->retail_price, 2) : '-' }}</td>
+              <td><button type="button" class="btn btn-sm btn-primary select-product-btn">اختيار</button></td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+      </div>
     </div>
+  </div>
 </div>
 
-<!-- Scripts -->
+@endsection
+
+@section('js')
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const productModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+    const productModal = new bootstrap.Modal(document.getElementById('productModal'));
     const productList = document.getElementById('product-list');
+    const totalAmountInput = document.getElementById('total_amount');
+    const totalAmountDisplay = document.getElementById('total_amount_display');
     let productIndex = 0;
 
-    document.getElementById('open-product-modal')?.addEventListener('click', () => {
+    // فتح المودال عند الضغط على زر إضافة منتج
+    document.getElementById('open-product-modal').addEventListener('click', () => {
         productModal.show();
     });
 
+    // بحث في المودال
+    document.getElementById('productSearch').addEventListener('keyup', function() {
+        const filter = this.value.toLowerCase();
+        document.querySelectorAll('#productTable tbody tr').forEach(row => {
+            const name = row.dataset.name.toLowerCase();
+            row.style.display = name.includes(filter) ? '' : 'none';
+        });
+    });
 
-    // لما أحدد المنتج
-    document.querySelectorAll('.select-product').forEach(button => {
+    // عند اختيار المنتج من المودال
+    document.querySelectorAll('.select-product-btn').forEach(button => {
         button.addEventListener('click', function () {
             const row = this.closest('tr');
             const id = row.dataset.id;
             const name = row.dataset.name;
-            const price = row.dataset.price;
+            const wholesalePrice = parseFloat(row.dataset.wholesalePrice);
+            const retailPrice = parseFloat(row.dataset.retailPrice);
+            const allowsRetail = row.dataset.allowsRetail === '1';
 
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
+            // تحقق من عدم إضافة نفس المنتج مرتين
+            if ([...productList.querySelectorAll('input[name^="products"]')].some(input => input.value == id)) {
+                alert('المنتج مضاف بالفعل');
+                return;
+            }
+
+            // إنشاء صف جديد في الفاتورة
+            const tr = document.createElement('tr');
+
+            tr.innerHTML = `
                 <td>
                     ${name}
                     <input type="hidden" name="products[${productIndex}][id]" value="${id}">
-                    <button type="button" class="btn btn-sm btn-danger remove-product float-end">×</button>
                 </td>
-                <td><input type="number" name="products[${productIndex}][quantity]" class="form-control quantity" min="1" value="1"></td>
-                <td><input type="number" name="products[${productIndex}][price]" class="form-control price" value="${price}"></td>
-                <td><input type="text" class="form-control subtotal" readonly></td>
+                <td>
+                    <select name="products[${productIndex}][type]" class="form-control type-selector" required>
+                        ${allowsRetail ? '<option value="retail">قطاعي</option>' : ''}
+                        <option value="wholesale">جملة</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="number" name="products[${productIndex}][quantity]" class="form-control quantity" min="1" value="1" required>
+                </td>
+                <td>
+                    <input type="number" name="products[${productIndex}][price]" class="form-control price" step="0.01" value="${wholesalePrice.toFixed(2)}" required>
+                </td>
+                <td>
+                    <input type="text" class="form-control subtotal" readonly value="${wholesalePrice.toFixed(2)}">
+                </td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-danger remove-product-btn">×</button>
+                </td>
             `;
 
-            productList.appendChild(newRow);
+            productList.appendChild(tr);
             productIndex++;
+
+            // إغلاق المودال بعد الإضافة
             productModal.hide();
+
+            calculateTotal();
+            attachEvents(tr, wholesalePrice, retailPrice, allowsRetail);
+        });
+    });
+
+    // دالة تحسب المجموع الكلي
+    function calculateTotal() {
+        let total = 0;
+        document.querySelectorAll('#product-list tr').forEach(row => {
+            const qty = parseFloat(row.querySelector('.quantity').value) || 0;
+            const price = parseFloat(row.querySelector('.price').value) || 0;
+            const subtotal = qty * price;
+            row.querySelector('.subtotal').value = subtotal.toFixed(2);
+            total += subtotal;
+        });
+        totalAmountInput.value = total.toFixed(2);
+        totalAmountDisplay.value = total.toFixed(2);
+    }
+
+    // تضبيط الأحداث على الصف الجديد: تغيير السعر/الكمية ونوع البيع، وحذف الصف
+    function attachEvents(row, wholesalePrice, retailPrice, allowsRetail) {
+        const quantityInput = row.querySelector('.quantity');
+        const priceInput = row.querySelector('.price');
+        const typeSelector = row.querySelector('.type-selector');
+        const removeBtn = row.querySelector('.remove-product-btn');
+
+        // عند تغيير نوع البيع نغير السعر تلقائيًا
+        typeSelector.addEventListener('change', () => {
+            if(typeSelector.value === 'retail' && allowsRetail) {
+                priceInput.value = retailPrice.toFixed(2);
+            } else {
+                priceInput.value = wholesalePrice.toFixed(2);
+            }
             calculateTotal();
         });
-    });
 
-    // فلترة الجدول
-    document.getElementById('product-search').addEventListener('keyup', function () {
-        const value = this.value.toLowerCase();
-        document.querySelectorAll('#product-table tbody tr').forEach(row => {
-            const name = row.querySelector('td')?.textContent.toLowerCase() || '';
-            row.style.display = name.includes(value) ? '' : 'none';
+        // عند تغيير الكمية أو السعر نعيد حساب المجموع
+        quantityInput.addEventListener('input', calculateTotal);
+        priceInput.addEventListener('input', calculateTotal);
+
+        // حذف المنتج من الفاتورة
+        removeBtn.addEventListener('click', () => {
+            row.remove();
+            calculateTotal();
         });
-    });
-
-    // تعديل: نحسب الإجمالي لو الكمية أو السعر اتغير
-    productList.addEventListener('input', function(e) {
-    if (e.target.classList.contains('quantity') || e.target.classList.contains('price')) {
-        calculateTotal();
     }
 });
-
-    productList.addEventListener('click', function(e) {
-        if (e.target.classList.contains('remove-product')) {
-            e.target.closest('tr').remove();
-            calculateTotal();
-        }
-    });
-
-    function calculateTotal() {
-    let total = 0;
-    document.querySelectorAll('#product-list tr').forEach(row => {
-        const qty = parseFloat(row.querySelector('.quantity')?.value || 0);
-        const price = parseFloat(row.querySelector('.price')?.value || 0);
-        const subtotal = qty * price;
-        row.querySelector('.subtotal').value = subtotal.toFixed(2);
-        total += subtotal;
-    });
-    document.getElementById('total').value = total.toFixed(2);
-
-
-    document.getElementById('hidden-total-amount').value = total.toFixed(2);
-}
-});
-
 </script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-@endsection
-@section('js')
-<script src="{{URL::asset('assets/plugins/chart.js/Chart.bundle.min.js')}}"></script>
 @endsection

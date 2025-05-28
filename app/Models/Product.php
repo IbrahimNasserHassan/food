@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
-    protected $fillable = ['name', 'category_id', 'supplier_id','quantity', 'PriceSalse', 'PriceBuy'];
+    protected $fillable = [
+        'name','category_id','supplier_id','quantity', 'purchase_price', 'retail_price', 'wholesale_price','allows_retail','units_per_wholesale'
+];
 
 
     public function category(): BelongsTo
@@ -21,7 +23,10 @@ class Product extends Model
         return $this->belongsTo(Supplier::class);
     }
 
-    
+      public function items()
+    {
+        return $this->hasMany(OrderDetails::class);
+    }
 
 
 

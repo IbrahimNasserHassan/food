@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+use Carbon\Carbon;  
 
 use Illuminate\Http\Request;
 use App\Models\Client;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ClientController;
+use Illuminate\Support\Facades\DB;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Product;
@@ -53,54 +55,143 @@ class OrderController extends Controller
 
 
 
-    public function StoreOrder(Customer $customer, Request $request){
+//     public function StoreOrder(Customer $customer, Request $request){
     
         
-        $request->validate([
-            'products' => 'required|array',
-            'products.*.id' => 'required|exists:products,id',
-            'products.*.quantity' => 'required|integer|min:1',
-        ]);
+//         $request->validate([
+//             'products' => 'required|array',
+//             'products.*.id' => 'required|exists:products,id',
+//             'products.*.quantity' => 'required|integer|min:1',
+//         ]);
 
-        $total = 0;
-        foreach ($request->products as $item) {
-            $product = Product::find($item['id']);
-            $total += $product->price * $item['quantity'];
-        }
+//         $total = 0;
+//         foreach ($request->products as $item) {
+//             $product = Product::find($item['id']);
+//             $total += $product->price * $item['quantity'];
+//         }
 
+//         $order = Order::create([
+//             'customer_id' => $request->customer_id,
+//             'total_amount' => $request->total_amount,
+//             'payment_status' => $request->invoice_type == 'paid' ? 'paid' : 'unpaid',    
+//         ]);
+
+        
+//         foreach ($request->products as $item) {
+//             $product = Product::find($item['id']);
+            
+//             OrderDetails::create([
+//                 'order_id' => $order->id,
+//                 'product_id' => $product->id,
+//                 'product_name' => $product->name,
+//                 'price' => $item['price'],
+//                 'quantity' => $item['quantity'],
+//                 'subtotal' => $product->price * $item['quantity'],
+//             ]);
+
+//             if ($product->quantity < $item['quantity']) {
+//                 return redirect()->back()->with('error', 'الكمية المطلوبة أكبر من المتوفرة في المخزن');
+//             } else {
+//                 $product->quantity -= $item['quantity'];
+//                 $product->save();
+            
+            
+        
+
+//         if(Auth::guard('client'))
+//         return redirect()->route('client.Dashboard')->with('success', 'تم انشاء الفاتورة');
+//         else
+        
+//         return redirect()->route('admin.customer.order.index')->with('success', 'تم إنشاء الطلب بنجاح');
+//     }
+// }
+//     }
+    // End Method
+
+
+
+public function StoreOrder(Request $request)
+{
+    DB::beginTransaction();
+
+    try {
+        // إنشاء الفاتورة
         $order = Order::create([
             'customer_id' => $request->customer_id,
             'total_amount' => $request->total_amount,
-            'payment_status' => $request->invoice_type == 'paid' ? 'paid' : 'unpaid',    
+            'payment_status' => $request->invoice_type,
+            'created_at' => now(),
+            'invoice_number' => $this->generateInvoiceNumber(),
         ]);
 
-        
-        foreach ($request->products as $item) {
-            $product = Product::find($item['id']);
-            
+        foreach ($request->products as $productData) {
+            $product = Product::findOrFail($productData['id']);
+
+            if ($order->payment_status === 'paid') {
+                if ($productData['type'] === 'wholesale') {
+                    // خصم بالجملة
+                    if ($product->quantity < $productData['quantity']) {
+                        throw new \Exception("الكمية غير كافية للمنتج: {$product->name}");
+                    }
+                    $product->quantity -= $productData['quantity'];
+                } elseif ($productData['type'] === 'retail') {
+                    // خصم الوحدات
+                    $unitsToDeduct = $productData['quantity'];
+                    $totalUnits = $product->quantity * $product->units_per_wholesale;
+
+                    if ($totalUnits < $unitsToDeduct) {
+                        throw new \Exception("الوحدات غير كافية للمنتج: {$product->name}");
+                    }
+
+                    $remainingUnits = $totalUnits - $unitsToDeduct;
+                    $product->quantity = floor($remainingUnits / $product->units_per_wholesale);
+                }
+            }
+
+            $product->save();
+
             OrderDetails::create([
                 'order_id' => $order->id,
                 'product_id' => $product->id,
                 'product_name' => $product->name,
-                'price' => $item['price'],
-                'quantity' => $item['quantity'],
-                'subtotal' => $product->price * $item['quantity'],
+                'quantity' => $productData['quantity'],
+                'price' => $productData['price'],
+                'subtotal' => $productData['quantity'] * $productData['price'],
+                'type' => $productData['type'],
             ]);
-
-            if ($product->quantity < $item['quantity']) {
-                return redirect()->back()->with('error', 'الكمية المطلوبة أكبر من المتوفرة في المخزن');
-            }
-            $product->quantity -= $item['quantity'];
-            $product->save();
         }
 
-        if(Auth::guard('client'))
-        return redirect()->route('client.Dashboard');
-        else
-        
-        return redirect()->route('admin.customer.order.index')->with('success', 'تم إنشاء الطلب بنجاح');
+        DB::commit();
+        return redirect()->route('admin.customer.order.index')->with('success', 'تم إنشاء الفاتورة بنجاح.');
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return redirect()->back()->with('error', 'حدث خطأ: ' . $e->getMessage());
+    }
+}
+// End Method
+
+
+
+private function generateInvoiceNumber()
+{
+    $year = now()->format('Y');
+    $lastOrder = Order::whereYear('created_at', $year)->latest('id')->first();
+    $nextNumber = $lastOrder ? ($lastOrder->id + 1) : 1;
+
+    return   $year . '-' . str_pad($nextNumber, 5, '0', STR_PAD_LEFT);
+}
+
+
+    //End Method
+
+
+    public function OrderDelete(Order $order)
+    {
+        $order->delete();
+        return redirect()->route('admin.customer.order.index')->with('success', 'تم حذف الطلب بنجاح');
     }
     // End Method
+
 
 
 

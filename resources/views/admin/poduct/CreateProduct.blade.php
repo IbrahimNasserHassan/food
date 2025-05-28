@@ -60,11 +60,37 @@
                                             <input type="number" name="quantity" step="0.01" class="form-control" id="" placeholder="الكمية">
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" name="PriceSalse" step="0.01" class="form-control" id="inputName" placeholder="سعر الشراء">
+                                            <input type="number" name="purchase_price" class="form-control" placeholder="سعر الشراء">
                                         </div>
-                                        <div class="form-group"> 
-                                            <input type="number" name="PriceBuy" step="0.01" class="form-control" id="inputName" placeholder="سعر البيع">
+                                        
+                                        <div class="form-group">
+                                            <label for="sale_type">نوع البيع</label>
+                                            <select name="sale_type" id="sale_type" class="form-control" required>
+                                                <option value="">اختر نوع البيع</option>
+                                                <option value="piece">بالقطعة</option>
+                                                <option value="unit">بالوحدة</option>
+                                            </select>
                                         </div>
+
+                                        <div class="form-group d-none" id="unit_name_group">
+                                            <label for="unit_name">اسم الوحدة (مثلاً: متر، كرتونة، لتر)</label>
+                                            <input type="text" name="unit_name" id="unit_name" class="form-control" placeholder="اسم الوحدة">
+                                        </div>
+                                         <div class="form-group">
+                                            <label for="units_per_wholesale">عدد وحدات القطاعي في الجملة (مثلاً: المتر في الكرتونة)</label>
+                                            <input type="number" name="units_per_wholesale" id="units_per_wholesale" class="form-control" min="1">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="number" name="wholesale_price" class="form-control" placeholder="سعر البيع بالجملة">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="allows_retail" class="form-label">يسمح البيع بالقطاعي؟</label>
+                                            <select name="allows_retail" id="allows_retail" class="form-control">
+                                                <option value="1">نعم</option>
+                                                <option value="0">لا</option>
+                                            </select>
+                                        </div>
+
                                         </div>
                                         <div class="form-group mb-0 mt-9 justify-content-end">
                                             <div>
@@ -88,4 +114,18 @@
 		<!-- main-content closed -->
 @endsection
 @section('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const saleTypeSelect = document.getElementById('sale_type');
+        const unitNameGroup = document.getElementById('unit_name_group');
+
+        saleTypeSelect.addEventListener('change', function () {
+            if (this.value === 'unit') {
+                unitNameGroup.classList.remove('d-none');
+            } else {
+                unitNameGroup.classList.add('d-none');
+            }
+        });
+    });
+</script>
 @endsection

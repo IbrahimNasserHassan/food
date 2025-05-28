@@ -43,8 +43,8 @@
 							@php
 								$id = Auth::guard('admin')->id();
 								$profilData = App\Models\Admin::find($id);
-								$id = Auth::guard('client')->id();
-								$profilData = App\Models\Client::find($id);
+							// 	$id = Auth::guard('client')->id();
+							// 	$profilData = App\Models\Client::find($id);
 							@endphp
 							<div class="dropdown main-profile-menu nav nav-item nav-link">
 								<a class="profile-user d-flex" href=""><img alt="" src="{{ (!empty($profilData->photo)) ? url('upload/admin_images/'.$profilData->photo) : url('upload/DCT.png')}}"></a>

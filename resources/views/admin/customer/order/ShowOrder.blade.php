@@ -69,7 +69,7 @@ $profilData = App\Models\Admin::find($id);
 
                         <div class="col-md">
                             <label class="tx-gray-600">بيانات الفاتورة</label>
-                            <p class="invoice-info-row"><span>رقم الفاتورة</span> <span>{{ $order->id }}</span></p>
+                            <p class="invoice-info-row"><span>رقم الفاتورة</span> <span>{{ $order->invoice_number }}</span></p>
                             <p class="invoice-info-row"><span>تاريخ الإستخراج</span> <span>{{ $order->created_at }}</span></p>
                         </div>
                     </div>

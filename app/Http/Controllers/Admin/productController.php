@@ -37,38 +37,58 @@ class productController extends Controller
     }
     // End Method
 
+public function CreateProductAdd(Request $request)
+{
+    try {
+        $request->validate([
+            'name' => 'required',
+            'category_id' => 'required|exists:categories,id',
+            'supplier_id' => 'required|exists:suppliers,id',
+            'quantity' => 'required',
+            'purchase_price' => 'required',
+            'retail_price' => 'nullable|numeric',
+            'wholesale_price' => 'required|numeric',
+            'allows_retail' => 'required|boolean',
+            'units_per_wholesale' => 'required|integer|min:1',
+            'sale_type' => 'required|in:unit,piece',
+            'unit_name' => 'required_if:sale_type,unit|string|nullable',
+            
+        ], [
+            'name.required' => 'حقل الاسم مطلوب.',
+            'category_id.required' => 'حقل الصنف مطلوب.',
+            'category_id.exists' => 'الصنف المحدد غير موجود.',
+            'supplier_id.exists' => 'المورد المحدد غير موجود.',
+            'purchase_price.required' => 'حقل سعر الشراء مطلوب.',
+            'wholesale_price.required' => 'حقل سعر الجملة مطلوب.',
+            'allows_retail.required' => 'يرجى تحديد إذا كان المنتج يُباع قطاعي أم لا.',
+            'sale_type.required' => 'يرجى تحديد نوع البيع.',
+            'unit_name.required_if' => 'يرجى تحديد اسم الوحدة إذا كان البيع بالوحدة.',
+        ]);
 
-    public function CreateProductAdd(Request $request){
-        // dd($request->all());
-        try {
+        $retail_price = $request->retail_price ?? 0;
 
-            $request->validate([
-                'name' => 'required',
-                'category_id' => 'required|exists:categories,id',
-                'supplier_id' => 'required|exists:suppliers,id',
-                'quantity' => 'required',
-                'PriceSalse' => 'required',
-                'PriceBuy' => 'required'
-            ], 
-            [
-                'name.required' => 'حقل الاسم مطلوب.',
-                'category_id.required' => 'حقل الصنف مطلوب.',
-                'category_id.exists' => 'الصنف المحدد غير موجود.',
-                'supplier_id.exists' => 'الصنف المحدد غير موجود.',
-                'quantity.required' => 'حقل الكمية مطلوب.',
-                'PriceSalse.required' => 'حقل سعر البيع مطلوب.',
-                'PriceBuy.required' => 'حقل سعر الشراء مطلوب.'
-            ]);
-    
-            Product::create($request->only(['name', 'category_id','supplier_id', 'quantity', 'PriceSalse', 'PriceBuy']));
-    
-            return redirect()->route('admin.product.index')->with('success', 'تم إضافة المنتج بنجاح');
-        } catch (\Exception $e) {
+        Product::create([
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+            'supplier_id' => $request->supplier_id,
+            'quantity' => $request->quantity,
+            'purchase_price' => $request->purchase_price,
+            'retail_price' => $request->retail_price,
+            'wholesale_price' => $request->wholesale_price,
+            'units_per_wholesale' => $request->units_per_wholesale,
+            'allows_retail' => $request->allows_retail,
+            'sale_type' => $request->sale_type,
+            'unit_name' => $request->unit_name,
+            'retail_price' => $retail_price,
 
-            return redirect()->back()->with('error', 'حدث خطأ: ' . $e->getMessage());
-        }
+        ]);
+
+        return redirect()->route('admin.product.index')->with('success', 'تم إضافة المنتج بنجاح');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'حدث خطأ: ' . $e->getMessage());
     }
-    // End Method
+}
+
 
 
 
