@@ -37,6 +37,11 @@
 								$id = Auth::guard('client')->id();
 								$profilData = App\Models\Client::find($id);
 							@endphp
+							<div class="main-header-right">
+							<ul class="nav">
+							<a href="{{ route('admin.login') }}" class="btn btn-sm"><i class="fa fa-user"> الدخول كمسئول </i></a>
+							</ul>
+							</div>
 
 							<div class="dropdown main-profile-menu nav nav-item nav-link">
 								<a class="profile-user d-flex" href=""><img alt="" src="{{ (!empty($profilData->photo)) ? url('upload/admin_images/'.$profilData->photo) : url('upload/DCT.png')}}"></a>

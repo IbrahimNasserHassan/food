@@ -10,14 +10,24 @@
             <option value="unpaid">غير مدفوعة</option>
             <option value="paid">مدفوعة</option>
         </select>
+    
+    <div class="" style="max-width: 18rem;">
+        <label for="invoice_date" class="form-label">تاريخ الفاتورة:</label>
+        <input type="date" name="date" id="invoice_date" class="form-control" value="{{ date('Y-m-d') }}" >
+    </div>
     </div>
 
-    <div class="mb-4">
+    <div class="mb-4" style="max-width: 18rem;">
         <label for="customer_id" class="form-label">اختر العميل:</label>
         <select name="customer_id" id="customer_id" class="form-control" required>
             <option value="">اختر العميل</option>
+        
             @foreach($customers as $cust)
-                <option value="{{ $cust->id }}">{{ $cust->CustomerName }}</option>
+            <option value="{{ $cust->id }}" {{ request()->route('customer') && request()->route('customer')->id == $cust->id ? 'selected' : '' }} readonly>
+                    {{ $cust->CustomerName }}
+            </option>
+            
+                {{-- <option value="{{ $cust->id }}">{{ $cust->CustomerName }}</option> --}}
             @endforeach
         </select>
     </div>
@@ -49,12 +59,12 @@
     <button type="submit" class="btn btn-success">حفظ الفاتورة</button>
 </form>
 
-<!-- Modal اختيار المنتج -->
+<!-- Modal -->
 <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="productModalLabel">اختيار المنتج</h5>
+        {{-- <h5 class="modal-title" id="productModalLabel">اختيار المنتج</h5> --}}
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
       </div>
       <div class="modal-body">
@@ -104,12 +114,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const totalAmountDisplay = document.getElementById('total_amount_display');
     let productIndex = 0;
 
-    // فتح المودال عند الضغط على زر إضافة منتج
+    // فتح المودل
     document.getElementById('open-product-modal').addEventListener('click', () => {
         productModal.show();
     });
 
-    // بحث في المودال
+    // بحث  
     document.getElementById('productSearch').addEventListener('keyup', function() {
         const filter = this.value.toLowerCase();
         document.querySelectorAll('#productTable tbody tr').forEach(row => {
@@ -165,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function () {
             productList.appendChild(tr);
             productIndex++;
 
-            // إغلاق المودال بعد الإضافة
+
             productModal.hide();
 
             calculateTotal();
@@ -173,7 +183,9 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // دالة تحسب المجموع الكلي
+
+    
+    //   المجموع الكلي
     function calculateTotal() {
         let total = 0;
         document.querySelectorAll('#product-list tr').forEach(row => {
@@ -187,12 +199,17 @@ document.addEventListener('DOMContentLoaded', function () {
         totalAmountDisplay.value = total.toFixed(2);
     }
 
+
+
+
     // تضبيط الأحداث على الصف الجديد: تغيير السعر/الكمية ونوع البيع، وحذف الصف
     function attachEvents(row, wholesalePrice, retailPrice, allowsRetail) {
         const quantityInput = row.querySelector('.quantity');
         const priceInput = row.querySelector('.price');
         const typeSelector = row.querySelector('.type-selector');
         const removeBtn = row.querySelector('.remove-product-btn');
+
+
 
         // عند تغيير نوع البيع نغير السعر تلقائيًا
         typeSelector.addEventListener('change', () => {
@@ -204,9 +221,11 @@ document.addEventListener('DOMContentLoaded', function () {
             calculateTotal();
         });
 
+
         // عند تغيير الكمية أو السعر نعيد حساب المجموع
         quantityInput.addEventListener('input', calculateTotal);
         priceInput.addEventListener('input', calculateTotal);
+
 
         // حذف المنتج من الفاتورة
         removeBtn.addEventListener('click', () => {

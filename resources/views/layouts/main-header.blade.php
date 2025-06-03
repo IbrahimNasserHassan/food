@@ -17,6 +17,9 @@
 					<div class="main-header-right">
 						<ul class="nav">
 							<a href="{{ route('admin.Dashboard') }}"><i class="btn btn-sm btn-dark">الرئيسية</i></a>
+						</ul> <br>
+						<ul class="nav">
+							<a href="{{ route('client.login') }}" class="btn btn-sm"><i class="fa fa-user"> الدخول كمستخدم </i></a>
 						</ul>
 						<div class="nav nav-item  navbar-nav-right ml-auto">
 							<div class="nav-link" id="bs-example-navbar-collapse-1">

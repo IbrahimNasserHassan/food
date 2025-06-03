@@ -134,10 +134,6 @@ Route::get('/admin/supplier-details/{id}',[SupplierController::class, 'SupplierD
 Route::get('/admin/supplier-delete/{id}',[SupplierController::class, 'SupplierDelete'])->name('admin.supplier.delete');
 
 
-
-
-
-
 });
 
 

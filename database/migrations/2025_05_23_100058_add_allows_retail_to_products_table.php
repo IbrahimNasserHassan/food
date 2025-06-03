@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             //
+            $table->boolean('allows_retail')->default(true)->after('wholesale_price'); // Add allows_retail column
+            
         });
     }
 

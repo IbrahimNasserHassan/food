@@ -42,18 +42,13 @@ public function SalesReport(Request $request)
     $query = Order::with(['customer', 'items.product'])
         ->where('payment_status', 'paid'); 
 
-
-
-        if ($request->filled('customer_id')) {
+    if ($request->filled('customer_id')) {
         $query->where('customer_id', $request->customer_id);
     }
-
 
     if ($request->filled('from_date')) {
         $query->whereDate('created_at', '>=', $request->from_date);
     }
-
-
 
     if ($request->filled('to_date')) {
         $query->whereDate('created_at', '<=', $request->to_date);
@@ -61,14 +56,19 @@ public function SalesReport(Request $request)
 
     $orders = $query->get();
 
-
     $total_sales = $orders->sum('total_amount');
 
-    $total_cost = $orders->sum(function ($order) {
-        return $order->items->sum(function ($item) {
-            return $item->product->PriceBuy * $item->quantity;
-        });
+$total_cost = $orders->sum(function ($order) {
+    return $order->items->sum(function ($item) {
+        if ($item->allows_retail === '1') {
+            $unitCost = $item->product->quantity * ($item->product->retail_price ?: 1);
+            
+        } else {
+            return $item->product->purchase_price * $item->quantity;
+        }
     });
+});
+
 
     $total_profit = $total_sales - $total_cost;
 
@@ -76,6 +76,7 @@ public function SalesReport(Request $request)
 
     return view('admin.report.report', compact('orders', 'customers', 'total_sales', 'total_cost', 'total_profit'));
 }
+
     // End Method
 
 

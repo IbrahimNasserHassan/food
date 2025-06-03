@@ -26,16 +26,22 @@ class OrderController extends Controller
 
 
 
-    public function CreateOrder(Request $request ,Customer $customer = null){
+    public function CreateOrder(Request $request ,Customer $customer = null) {
+
+        $customers = Customer::all();
+
         if ($customer && $customer->exists) {
             // جاي من صفحة العميل
             $products = Product::all();
+
+            
             return view('admin.customer.order.CreateOrder', [
-                'customer' => $customer,
+                'customers' => $customers,
                 'products' => $products,
                 'fromCustomerPage' => true,
             ]);
         } else {
+
             // إنشاء فاتورة بدون تحديد عميل
             $customers = Customer::all();
             $products = Product::all();
@@ -110,75 +116,92 @@ class OrderController extends Controller
 
 
 
+
+
 public function StoreOrder(Request $request)
 {
     DB::beginTransaction();
 
     try {
+    
         // إنشاء الفاتورة
         $order = Order::create([
             'customer_id' => $request->customer_id,
             'total_amount' => $request->total_amount,
             'payment_status' => $request->invoice_type,
-            'created_at' => now(),
+            'date' =>$request->date, 
             'invoice_number' => $this->generateInvoiceNumber(),
+            
         ]);
 
-        foreach ($request->products as $productData) {
-            $product = Product::findOrFail($productData['id']);
+        foreach ($request->products as $prod) {
+            $product = Product::findOrFail($prod['id']);
+            $qty = (int) $prod['quantity'];
+            $type = $prod['type']; 
+            $price = (float) $prod['price'];
+            $subtotal = $qty * $price;
 
-            if ($order->payment_status === 'paid') {
-                if ($productData['type'] === 'wholesale') {
-                    // خصم بالجملة
-                    if ($product->quantity < $productData['quantity']) {
-                        throw new \Exception("الكمية غير كافية للمنتج: {$product->name}");
+
+            // تحقق من توفر الكمية في المخزن
+            if ($request->invoice_type === 'paid') {
+                if ($type === 'wholesale') {
+                    if ($product->quantity < $qty) {
+                        throw new \Exception("الكمية المتوفرة من المنتج {$product->name} غير كافية.");
                     }
-                    $product->quantity -= $productData['quantity'];
-                } elseif ($productData['type'] === 'retail') {
-                    // خصم الوحدات
-                    $unitsToDeduct = $productData['quantity'];
-                    $totalUnits = $product->quantity * $product->units_per_wholesale;
+                    $product->quantity -= $qty;
+                } else {
+                    // البيع بالوحدة
+                    $unitsAvailable = $product->quantity * $product->units_per_wholesale;
 
-                    if ($totalUnits < $unitsToDeduct) {
-                        throw new \Exception("الوحدات غير كافية للمنتج: {$product->name}");
+                    if ($unitsAvailable < $qty) {
+                        throw new \Exception("عدد الوحدات المتوفرة من المنتج {$product->name} غير كافية.");
                     }
 
-                    $remainingUnits = $totalUnits - $unitsToDeduct;
-                    $product->quantity = floor($remainingUnits / $product->units_per_wholesale);
+
+                    // احسب الوحدات المتبقية بعد البيع
+                    $unitsLeft = $unitsAvailable - $qty;
+
+
+                    // احسب الكمية الجديدة بعد الخصم
+                    $product->quantity = floor($unitsLeft / $product->units_per_wholesale);
                 }
+
+                $product->save();
             }
 
-            $product->save();
-
+            // إنشاء تفاصيل الطلب
             OrderDetails::create([
                 'order_id' => $order->id,
                 'product_id' => $product->id,
                 'product_name' => $product->name,
-                'quantity' => $productData['quantity'],
-                'price' => $productData['price'],
-                'subtotal' => $productData['quantity'] * $productData['price'],
-                'type' => $productData['type'],
+                'price' => $price,
+                'quantity' => $qty,
+                'subtotal' => $subtotal,
+                'type' => $type,
             ]);
         }
 
         DB::commit();
-        return redirect()->route('admin.customer.order.index')->with('success', 'تم إنشاء الفاتورة بنجاح.');
+
+        return redirect()->route('admin.customer.order.index')->with('success', 'تم إنشاء الفاتورة بنجاح');
     } catch (\Exception $e) {
         DB::rollBack();
-        return redirect()->back()->with('error', 'حدث خطأ: ' . $e->getMessage());
+        dd($e->getMessage(), $e->getFile(), $e->getLine());
+        // return back()->with('error', 'حدث خطأ: ' . $e->getMessage());
     }
 }
-// End Method
+//End Method
+
 
 
 
 private function generateInvoiceNumber()
 {
     $year = now()->format('Y');
-    $lastOrder = Order::whereYear('created_at', $year)->latest('id')->first();
+    $lastOrder = Order::whereYear('created_at',$year)->latest('id')->first();
     $nextNumber = $lastOrder ? ($lastOrder->id + 1) : 1;
 
-    return   $year . '-' . str_pad($nextNumber, 5, '0', STR_PAD_LEFT);
+    return   str_pad($nextNumber, 5, '0', STR_PAD_LEFT) . '-' . now()->format('Y');
 }
 
 
@@ -219,17 +242,58 @@ private function generateInvoiceNumber()
 
 
 
-    public function updatePaymentStatus(Request $request, Order $order){
+    public function updatePaymentStatus(Request $request, Order $order,$orderId){
+
+    DB::beginTransaction();
+
+    try {
+        $order = Order::with('orderDetails.product')->findOrFail($orderId);
+
+        if ($order->payment_status === 'paid') {
+            return redirect()->back()->with('info', 'تم تأكيد الدفع مسبقًا.');
+        }
+
+        // تحديث حالة الدفع
+        $order->payment_status = 'paid';
+        $order->save();
+
+        foreach ($order->orderDetails as $item) {
+            $product = $item->product;
+
+            if ($item->type === 'wholesale') {
 
 
-        $request->validate([
-            'payment_status' => 'required|in:paid,unpaid'
-        ]);
+                // تحقق من توفر الكمية بالجملة
+                if ($product->quantity < $item->quantity) {
+                    throw new \Exception("الكمية غير كافية للمنتج: {$product->name}");
+                }
 
-        $order->update(['payment_status' => $request->payment_status]);
-        
-        return back()->with('success', 'تم تحديث حالة الدفع بنجاح');
+                $product->quantity -= $item->quantity;
 
+            } elseif ($item->type === 'retail') {
+
+                // تحقق من توفر الوحدات
+                $unitsToDeduct = $item->quantity;
+                $totalUnits = $product->quantity * $product->units_per_wholesale;
+
+                if ($totalUnits < $unitsToDeduct) {
+                    throw new \Exception("الوحدات غير كافية للمنتج: {$product->name}");
+                }
+
+                $remainingUnits = $totalUnits - $unitsToDeduct;
+                $product->quantity = floor($remainingUnits / $product->units_per_wholesale);
+            }
+
+            $product->save();
+        }
+
+        DB::commit();
+        return redirect()->back()->with('success', 'تم تأكيد الدفع وخصم الكمية من المخزون.');
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return redirect()->back()->with('error', 'حدث خطأ: ' . $e->getMessage());
+    }
 
     }
     // End Method

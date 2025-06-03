@@ -9,17 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-   public function up()
+public function up()
 {
     Schema::table('products', function (Blueprint $table) {
-        $table->renameColumn('PriceBuy', 'retail_price');
+        $table->dropColumn('category');
     });
 }
 
 public function down()
 {
     Schema::table('products', function (Blueprint $table) {
-        $table->renameColumn('retail_price', 'PriceBuy');
+        $table->string('category'); // أو أي نوع كان
     });
 }
 };
