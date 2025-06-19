@@ -18,6 +18,8 @@ class OrderDetails extends Model
         'quantity',
         'subtotal',
         'type',
+        'user_id', 
+        
     ];
 
     public function order(): BelongsTo
@@ -29,4 +31,8 @@ class OrderDetails extends Model
     {
         return $this->belongsTo(Product::class);
     }
+    public function user()
+{
+    return $this->belongsTo(User::class);
+}
 }

@@ -19,6 +19,7 @@ class OrderController extends Controller
 
     public function Indexorder(){
         $orders= Order::get();
+        
         return view('admin.customer.order.OrderIndex',compact('orders'));
 
     }
@@ -171,6 +172,7 @@ public function StoreOrder(Request $request)
 
             // إنشاء تفاصيل الطلب
             OrderDetails::create([
+                // 'user_id' => Auth::id(), // إضافة معرف المستخدم الحالي
                 'order_id' => $order->id,
                 'product_id' => $product->id,
                 'product_name' => $product->name,
@@ -178,6 +180,8 @@ public function StoreOrder(Request $request)
                 'quantity' => $qty,
                 'subtotal' => $subtotal,
                 'type' => $type,
+                
+                
             ]);
         }
 

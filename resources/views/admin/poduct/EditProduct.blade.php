@@ -32,6 +32,24 @@
                                             إسم المنتج :    
                                             <input type="text" name="name" class="form-control" id="inputName" value="{{ $product->name }}">
                                         </div>
+                                        <div class="form-group">
+                                            الصنف :
+                                            <select class="form-control" name="category_id" id="category_id" required>
+                                                <option value="category_id">حدد الصنف</option>
+                                                @foreach($categories as $category)
+                                                    <option value="{{ $category->id }}">{{ $category->CategoryName }}</option>
+                                                @endforeach
+                                            </select> 
+                                        </div>
+                                        <div class="form-group">
+                                            المورد :
+                                            <select class="form-control" name="supplier_id" id="supplier_id" required>
+                                                <option value="category_id">المورد </option>
+                                                @foreach($suppliers as $supplier)
+                                                    <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
+                                                @endforeach
+                                            </select>                 
+                                        </div>
                                         
                                         <div class="form-group">
                                             الكمية :
@@ -39,11 +57,11 @@
                                         </div>
                                         <div class="form-group">
                                             سعر الشراء :
-                                            <input type="number" name="PriceSalse" class="form-control" id="inputName" value="{{ $product->PriceSalse }}">
+                                            <input type="number" name="purchase_price" class="form-control" id="inputName" value="{{ $product->purchase_price }}">
                                         </div>
                                         <div class="form-group">
                                             سعر البيع :
-                                            <input type="number" name="PriceBuy" class="form-control" id="inputName" value="{{ $product->PriceBuy }}">
+                                            <input type="number" name="wholesale_price" class="form-control" id="inputName" value="{{ $product->wholesale_price }}">
                                         </div>
                                         </div>
                                         <div class="form-group mb-0 mt-9 justify-content-end">

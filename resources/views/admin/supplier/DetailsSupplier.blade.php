@@ -68,7 +68,7 @@ $profilData = App\Models\Admin::find($id);
                         <tr>
                             <td>{{ $supplier->name }}</td>
                             <td>{{ $supplier->quantity }}</td>
-                            <td>{{ number_format($supplier->PriceSalse) }}</td>
+                            <td>{{ number_format($supplier->purchase_price) }}</td>
                             <td>{{ $supplier->created_at->format('d-m-Y') }}</td>
 
                         </tr>

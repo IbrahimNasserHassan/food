@@ -59,6 +59,7 @@
     <button type="submit" class="btn btn-success">حفظ الفاتورة</button>
 </form>
 
+
 <!-- Modal -->
 <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">

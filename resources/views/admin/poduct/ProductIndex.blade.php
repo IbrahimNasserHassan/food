@@ -51,6 +51,7 @@
 												<th class="wd-15p border-bottom-0">سعر الشراء</th>
 												<th class="wd-10p border-bottom-0">سعر البيع</th>
 												<th class="wd-10p border-bottom-0"> تاريخ الاضافة</th>
+												<th class="wd-10p border-bottom-0"> تاريخ آخر تحديث</th>
 												<th class="wd-25p border-bottom-0"></th>
 											</tr>
 										</thead>
@@ -69,12 +70,13 @@
 												</td>
 												<td>{{ number_format($product->wholesale_price) }}</td>
 												<td>{{ $product->created_at->format('Y-m-d')  }} </td>
+												<td>{{ $product->updated_at->format('Y-m-d') }}</td>
 
 												<td>
 													<a href="{{ route('admin.product.edit', ['id' => $product->id]) }}" class="btn btn-sm btn-warning"><i class="fa fa-edit"> تعديل</i></a>
 													<form action="{{ route('admin.product.delete',['id' => $product->id]) }}"  class="d-inline" onsubmit="return confirm('هل أنت متأكد من حذف هذا المنتج؟');">
 														@csrf
-														<button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"> حذف</i></button> <br>
+														{{-- <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"> حذف</i></button> <br> --}}
 													</form>
 												</td>
 											</tr>

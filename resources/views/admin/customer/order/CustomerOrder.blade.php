@@ -94,6 +94,8 @@ $profilData = App\Models\Admin::find($id);
             </table>
         </div>
     </div>
+        </div>
+    </div>
 </div>
 @endsection
 @section('js')

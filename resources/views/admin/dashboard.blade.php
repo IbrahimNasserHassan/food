@@ -36,7 +36,7 @@
                                                 <p class="mb-0 tx-12 text-white op-7"> عدد المنتجات و البضاعة  داخل المخزن  </p>
                                             </div>
                                             <span class="float-right my-auto mr-auto">
-                                                <i class="fas fa-arrow-circle-right text-white"></i>
+                                                <a href="{{ route('admin.product.index') }}" ><i class="fas fa-arrow-circle-right text-white"></i></a>
                                                 <span class="text-white op-7"> </span>
                                             </span>
                                         </div>
@@ -58,7 +58,7 @@
                                                 <p class="mb-0 tx-12 text-white op-7">جميع العملاء</p>
                                             </div>
                                             <span class="float-right my-auto mr-auto">
-                                                <i class="fas fa-arrow-circle-right text-white"></i>
+                                                <a href="{{ route('admin.supplier.index') }}"><i class="fas fa-arrow-circle-right text-white"></i></a>
                                                 <span class="text-white op-7"></span>
                                             </span>
                                         </div>
@@ -81,7 +81,7 @@
                                                 <p class="mb-0 tx-12 text-white op-7">جميع الفواتير المنشأة في النظام</p>
                                             </div>
                                             <span class="float-right my-auto mr-auto">
-                                                <i class="fas fa-arrow-circle-right text-white"></i>
+                                                <a href="{{ route('admin.customer.order.index') }}"><i class="fas fa-arrow-circle-right text-white"></i></a>
                                                 <span class="text-white op-7"> </span>
                                             </span>
                                         </div>

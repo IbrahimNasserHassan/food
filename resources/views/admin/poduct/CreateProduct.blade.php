@@ -32,14 +32,17 @@
                             <div class="card  box-shadow-0">
                                 <div class="card-header">
                                     <h4 class="card-title mb-1">إضافة منتج </h4>
-                                </div>
+                                </div> <br>
+                            
                                 <div class="card-body pt-0">
                                     <form action="{{ route('admin.product.add') }}" method="POST" class="form-horizontal" >
                                         @csrf
                                         <div class="form-group">
-                                            <input type="text" name="name" class="form-control" id="inputName" placeholder="الاسم">
+                                            <label for="sale_type">إسم المنتج</label>
+                                            <input type="text" name="name" class="form-control" id="inputName" placeholder="إسم المنتج">
                                         </div>
                                         <div>
+                                            <label for="sale_type"> الصنف</label>
                                             <select class="form-control" name="category_id" id="category_id" required>
                                                 <option value="category_id">حدد الصنف</option>
                                                 @foreach($categories as $category)
@@ -48,6 +51,7 @@
                                             </select>
                                         </div> <br>
                                         <div>
+                                            <label for="sale_type"> المورد</label>
                                             <select class="form-control" name="supplier_id" id="supplier_id" required>
                                                 <option value="">المورد </option>
                                                 @foreach($suppliers as $supplier)
@@ -65,30 +69,29 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="sale_type">سعر البيع </label>
-                                            <input type="number" name="wholesale_price" class="form-control" placeholder="سعر بيع  بالحبة">
+                                            <input type="number" name="wholesale_price" class="form-control" placeholder="سعر بيع  ">
                                         </div>
                                         
-                                        
-                                            <label for="allows_retail" class="form-label">يباع  بالتجزئة؟</label>
+                                            {{-- <label for="allows_retail" class="form-label">يباع  بالتجزئة؟</label>
                                             <select name="allows_retail" id="allows_retail" class="form-control">
                                                 <option value="1">نعم</option>
                                                 <option value="0">لا</option>
-                                            </select>
+                                            </select> --}}
 
-                                        <div class="form-group">
+                                        {{-- <div class="form-group">
                                             <label for="sale_type">نوع البيع</label>
                                             <select name="sale_type" id="sale_type" class="form-control" required>
                                                 <option value="">اختر نوع البيع</option>
                                                 <option value="piece">بالحبة</option>
                                                 <option value="unit">بالتجزئة</option>
                                             </select>
-                                        </div>
-                                        <div class="form-group d-none" id="unit_name_group">
+                                        </div> --}}
+                                        {{-- <div class="form-group d-none" id="unit_name_group">
                                             <label for="unit_name">نوع الوحدة </label>
                                             <input type="text" name="unit_name" id="unit_name" class="form-control" placeholder="نوع الوحدة">
-                                        </div>
+                                        </div> --}}
 
-                                        <div class="form-group">
+                                        {{-- <div class="form-group">
                                             <label for="sale_type"> عدد الوحدات في الحبة</label>
                                             <input type="number" name="units_per_wholesale" class="form-control" placeholder="  عدد الوحدات في الحبة الواحدة">
                                         </div>
@@ -96,7 +99,7 @@
                                         <div class="form-group d-none" id="retail_price_group">
                                             <label for="retail_price" class="form-label">سعر البيع بالتجزئة</label>
                                             <input type="text" name="retail_price" class="form-control" placeholder="  ">
-                                        </div>
+                                        </div> --}}
                                         
                                         </div>
                                         
@@ -106,6 +109,7 @@
                                                 <a href="{{ route('admin.product.index') }}" class="btn btn-secondary"><i class="fa fa-cros">إلغاء</i></a>
                                             </div>
                                         </div>
+                                        
                                     </form>
                                 </div>
                             </div>

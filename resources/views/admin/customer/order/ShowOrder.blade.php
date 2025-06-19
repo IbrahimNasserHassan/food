@@ -43,6 +43,7 @@
             color: black;
             font-size: 42px;
         }
+        
         .table th,
         .table tr,
         .table td {
@@ -185,13 +186,13 @@ $profilData = App\Models\Admin::find($id);
 				</div> <br>
                     
                 <div class="tx-bold seginture">
-                    التوقيع:............................................................................................................
+                    التوقيع:...................
                 </div>
                 <br>
 			
                     <div class="bg-light tx-bold about">                    
                         <p>
-                        هواتفنا : {{ $profilData->phone }} | 0912426069 - 0129974393 </p>
+                        هواتفنا : 0912426069 - 0129974393 - 0960355201 - 0129125156 </p>
                         <p class="text-right tx-bold">
                         موقعنا :   {{ $profilData->address }} | تقاطع الأبراج
                         </p>

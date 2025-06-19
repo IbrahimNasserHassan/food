@@ -55,6 +55,7 @@
                                             <th class=""> رقم الهاتف</th>
                                             <th class="">البريد الإلكتروني</th>
                                             <th class=""></th>
+                                            
                                         
                                         </tr>
                                     </thead>
@@ -69,13 +70,12 @@
                                                 <td>{{ $customer->CustomerEmail }}</td>
                                                 <td>
 
-                                                    <a href="{{ route('admin.customer.orders.show',$customer->id) }}" class="btn btn-sm btn-info"><i class=" fa fa-list">  فواتير العميل </i></a>
+                                                    <a href="{{ route('admin.customer.orders.show',$customer->id) }}" class="btn btn-sm btn-info"><i class=" fa fa-list">    فواتير العميل السابقة </i></a>
 													<a href="{{ route('admin.customer.order.create', ['customer' => $customer->id]) }}" class=""><i class="btn btn-sm btn-success">إنشاء فاتورة </i></a>
-
-                                                    <form action="{{ route('admin.customer.delete',['id' => $customer->id]) }}"  class="d-inline" onsubmit="return confirm('  هل أنت متأكد من حذف هذا العميل! ');">
+                                                {{-- <form action="{{ route('admin.customer.delete',['id' => $customer->id]) }}"  class="d-inline" onsubmit="return confirm('  هل أنت متأكد من حذف هذا العميل! ');">
                                                         @csrf
                                                         <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"> حذف</i></button> <br>
-                                                    </form>
+                                                    </form> --}}
                                                 </td>
                                             </tr>
                                             @endforeach

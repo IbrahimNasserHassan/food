@@ -19,7 +19,8 @@
 							<h4 class="content-title mb-0 my-auto">المنتجات</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ جميع المنتجات ( المخزن ! )</span>
 						</div>
 					</div>
-					
+					<a href="{{ route('admin.order.create') }}" class="btn btn-primary">            إنشاء طلب جديد</a>
+
 				</div>
 				<!-- breadcrumb -->
 @endsection
