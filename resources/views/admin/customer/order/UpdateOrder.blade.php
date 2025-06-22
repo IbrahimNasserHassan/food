@@ -17,8 +17,10 @@
 @endsection
 @section('content')
 @if(session('success'))
-<div class="alert alert-danger">
-    {{ session('success') }}
+<div class="alert alert-success alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h5><i class="icon fas fa-check"></i>{{ session('success') }}</h5>
+    </div>
 </div>
 @endif
 @if(session('error'))
@@ -26,7 +28,7 @@
     {{ session('error') }}
 </div>
 @endif
-<form action="{{ route('admin.order.store') }}" method="POST">
+<form action="{{ route('admin.order.store',$product->id) }}" method="POST">
     @csrf
     <div class="row" style="width: 18rem;">
         <label for="invoice_type" class="form-label">نوع الفاتورة:</label>

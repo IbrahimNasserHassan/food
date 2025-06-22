@@ -29,7 +29,10 @@
 				<!-- row -->
 				<div class="row row-sm">
 					@if(session('success'))
-					<div class="alert alert-success">{{ session('success') }}</div>
+					<div class="alert alert-success"></div>
+					<button type="button" class="btn btn-success swalDefaultSuccess">
+						{{ session('success') }}
+                	</button>
 					@endif
 					<div class="col-xl-12">
 						<div class="card">

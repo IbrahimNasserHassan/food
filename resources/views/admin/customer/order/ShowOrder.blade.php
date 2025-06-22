@@ -34,6 +34,11 @@
             text-align: center;
             font-size: 42px;
         }
+        .main-img-user{
+            image-orientation: ;
+            
+            /* font-size: 42px; */
+        }
         .table {
             width: 100%;
             border-collapse: collapse;
@@ -54,7 +59,10 @@
 
         }
         .seginture{
-           
+            padding: 8px;
+            text-align: center;
+            font-size: 18px;
+        
         }
         .about{
             text-align: button;
@@ -118,12 +126,20 @@ $profilData = App\Models\Admin::find($id);
         <div >
             <div id="ReportAria">
             <div class="card-header" >
-                <div class="tx-center">PROMAX TECHNOLOGY FOR COMPUTER SERVICES
+                {{-- <div class="tx-center">PROMAX TECHNOLOGY FOR COMPUTER SERVICES --}}
                     {{-- <div class="main-img-user">
                         <img alt="" src="{{ (!empty($profilData->photo)) ? url('upload/admin_images/'.$profilData->photo) : url('upload/DCT.png')}}">
                     </div> --}}
                     {{-- <div class="tx"> for technical services</div> --}}
-                </div>
+                {{-- </div> --}}
+                   <div class="invoice-header">
+                        <h1 class="invoice-title">PROMAX TECHNOLOGY FOR COMPUTER SERVICES </h1>
+
+                        <div class="main-img-user">
+                            <img alt="" src="{{ !empty($profilData->photo) ? url('upload/admin_images/'.$profilData->photo) : url('upload/DCT.png') }}">
+                        </div>
+
+                    </div>
             </div><br>
 
             <div class="billed-from tx-bold">
@@ -185,17 +201,26 @@ $profilData = App\Models\Admin::find($id);
                     </table>
 				</div> <br>
                     
-                <div class="tx-bold seginture">
-                    التوقيع:...................
-                </div>
+                
                 <br>
-			
-                    <div class="bg-light tx-bold about">                    
+			<div>
+            التوقيع:.................................................
+
+            </div> <br>
+            <div class="bg-light tx-bold about">                    
                         <p>
                         هواتفنا : 0912426069 - 0129974393 - 0960355201 - 0129125156 </p>
                         <p class="text-right tx-bold">
                         موقعنا :   {{ $profilData->address }} | تقاطع الأبراج
                         </p>
+                    </div>
+                        <div class="invoice-footer">
+                            <div class="tx-bold seginture">
+                    
+                        
+                    </div>
+                    <div class="invoice-footer tx-center">
+                    <h6 class=""> Copyright © 2025 I&G. Designed by I&G-Developer, 0960355201 - 0110354195 All rights reserved.</h6>
                     </div>
                 
     </div>

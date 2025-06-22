@@ -25,10 +25,15 @@
 		</div>
 	</div>@endsection
 @section('content')
-@if(session('success'))
+                    @if(session('success'))
 
+                    <div class="alert alert-success alert-dismissible">
+                        <h6>{{ session('success') }}<i class="icon fas fa-check"></i></h6>
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        </div>
+                        
+                    </div>
 
-					<div class="alert alert-success">{{ session('success') }}</div>
 					@endif
                     @if(session('error'))
 					<div class="alert alert-danger">{{ session('error') }}</div>
@@ -72,6 +77,7 @@
 
                                                     <a href="{{ route('admin.customer.orders.show',$customer->id) }}" class="btn btn-sm btn-info"><i class=" fa fa-list">    فواتير العميل السابقة </i></a>
 													<a href="{{ route('admin.customer.order.create', ['customer' => $customer->id]) }}" class=""><i class="btn btn-sm btn-success">إنشاء فاتورة </i></a>
+                                                    <a href="{{ route('admin.customer.edit',$customer->id) }}" class="btn btn-sm btn-warning"><i class="fa fa-edit"> تعديل </i></a>
                                                 {{-- <form action="{{ route('admin.customer.delete',['id' => $customer->id]) }}"  class="d-inline" onsubmit="return confirm('  هل أنت متأكد من حذف هذا العميل! ');">
                                                         @csrf
                                                         <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"> حذف</i></button> <br>

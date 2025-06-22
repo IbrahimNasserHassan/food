@@ -80,6 +80,7 @@
                                                 <td>{{ $profilData->name }}ِ</td>
 												<td>
                                                     <a href="{{ route('admin.customer.order.details', $order->id) }}" class="btn btn-sm btn-info"><i class="fa fa-info-circle"> عرض</i></a>
+													<a href="{{ route('admin.customer.order.edit', $order->id) }}" class="btn btn-sm bg-purple color-palette"><i class="fa fa-edit"> تعديل الفاتورة</i></a>
 													@if($order->payment_status !== 'paid')
     													<form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST" style="display: inline-block;">
     													    @csrf

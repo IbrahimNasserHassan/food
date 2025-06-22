@@ -234,11 +234,16 @@ private function generateInvoiceNumber()
 
 
 
+
+
+
     public function EditOrder(Customer $customer, Order $order){
 
+        $customers=Customer::get();
+        $products = Product::all();
         $orderdetails=OrderDetails::get();
-        $order=Order::findOrFail();
-        return view('admin.customer.order.UpdateOrder',compact('order','orderdetails'));
+        $order=Order::get();
+        return view('admin.customer.order.UpdateOrder',compact('order','orderdetails','customers','products'));
 
 
     }

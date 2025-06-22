@@ -17,10 +17,18 @@ class CustomerController extends Controller
 
 
 
+
+
+
+
     public function CreateCustomer(){
         return view('admin.customer.CreateCustomer');
     }
     // End Method
+
+
+
+
 
 
 
@@ -58,6 +66,59 @@ class CustomerController extends Controller
 
     }
     // End Method
+
+
+
+
+
+
+
+    public function CustomertEdit($id){
+
+        $customers=Customer::findOrFail($id);
+        return view('admin.customer.EditeCustomer',compact('customers'));
+
+    }
+    // End Method
+
+
+
+
+    public function CustomerUpdate(Request $request, $id){
+
+        $customers=Customer::findOrFail($id);
+
+        try{
+
+    
+        $request->validate([
+            'CustomerName' => 'required',
+            'CustomerAddree' => 'required',
+            'CustomerCity' => 'required',
+            'CustomerPhone' => 'required|array|min:1',
+            'CustomerPhone.0' => 'required'
+
+        ],
+        [
+            'CustomerName.required'=> 'ادخل إسم العميل',
+            'CustomerAddree'=> 'ادخل عنوان العميل',
+            'CustomerCity'=> 'الولاية!',
+            'CustomerPhone.0'=> 'أدخل رقم العميل'
+        ]
+    );
+        
+
+        $customers->update($request->all());
+
+        return redirect()->route('admin.customer.index')->with('success','تم تحديث بيانات العميل');
+
+        
+    } catch (\Exception $e) {
+
+        return redirect()->back()->with('error', 'حدث خطأ: ' . $e->getMessage());
+    }
+    }
+
 
 
 
