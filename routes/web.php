@@ -12,6 +12,8 @@ use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\PurchaseController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
@@ -94,7 +96,12 @@ Route::get('/admin/customer-delete/{id}',[CustomerController::class, 'CustomerDe
 Route::get('/admin/customer/order-index',[OrderController::class, 'Indexorder'])->name('admin.customer.order.index');
 
 
-
+// Purchase Route
+Route::get('/admin/purchase',[PurchaseController::class, 'index'])->name('admin.purchase.index');
+Route::get('admin/purchase/create', [PurchaseController::class, 'create'])->name('admin.purchase.create');
+Route::post('/admin/purchase-store',[PurchaseController::class, 'StorePurchaseInvoice'])->name('admin.purchase.store');
+Route::get('/admin/purchase-edit/{id}', [PurchaseController::class, 'edit'])->name('admin.purchase.edit');
+Route::post('/admin/purchase-update/{id}', [PurchaseController::class, 'update'])->name('admin.purchase.update');
 
 
 

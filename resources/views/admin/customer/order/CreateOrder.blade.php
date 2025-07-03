@@ -115,10 +115,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const totalAmountDisplay = document.getElementById('total_amount_display');
     let productIndex = 0;
 
+
+
+
     // فتح المودل
     document.getElementById('open-product-modal').addEventListener('click', () => {
         productModal.show();
     });
+
+
+
 
     // بحث  
     document.getElementById('productSearch').addEventListener('keyup', function() {
@@ -129,6 +135,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+
+
     // عند اختيار المنتج من المودال
     document.querySelectorAll('.select-product-btn').forEach(button => {
         button.addEventListener('click', function () {
@@ -138,6 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const wholesalePrice = parseFloat(row.dataset.wholesalePrice);
             const retailPrice = parseFloat(row.dataset.retailPrice);
             const allowsRetail = row.dataset.allowsRetail === '1';
+
 
             // تحقق من عدم إضافة نفس المنتج مرتين
             if ([...productList.querySelectorAll('input[name^="products"]')].some(input => input.value == id)) {
@@ -163,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <input type="number" name="products[${productIndex}][quantity]" class="form-control quantity" min="1" value="1" required>
                 </td>
                 <td>
-                    <input type="number" name="products[${productIndex}][price]" class="form-control price" step="0.01" value="${wholesalePrice.toFixed(2)}" required>
+                    <input type="number" name="products[${productIndex}][price]" class="form-control price" step="0.01" value="" required>
                 </td>
                 <td>
                     <input type="text" class="form-control subtotal" readonly value="${wholesalePrice.toFixed(2)}">
@@ -204,6 +213,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // تضبيط الأحداث على الصف الجديد: تغيير السعر/الكمية ونوع البيع، وحذف الصف
+
     function attachEvents(row, wholesalePrice, retailPrice, allowsRetail) {
         const quantityInput = row.querySelector('.quantity');
         const priceInput = row.querySelector('.price');

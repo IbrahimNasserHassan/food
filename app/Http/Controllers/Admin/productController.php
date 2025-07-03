@@ -10,6 +10,7 @@ use App\Mail\Websitemail;
 use App\Models\Admin;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Purchase;
 use App\Models\Supplier;
 use Illuminate\Support\Arr;
 
@@ -37,7 +38,8 @@ class productController extends Controller
 
         $categories = Category::all();
         $suppliers = Supplier::all();
-        return view('admin.poduct.CreateProduct',compact('categories','suppliers'));
+        $products = Product::all();
+        return view('admin.poduct.CreateProduct',compact('categories','suppliers','products'));
     }
     // End Method
 
@@ -54,12 +56,9 @@ public function CreateProductAdd(Request $request)
             'supplier_id' => 'required|exists:suppliers,id',
             'quantity' => 'required',
             'purchase_price' => 'required',
-            // 'retail_price' => 'nullable|numeric',
             'wholesale_price' => 'required|numeric|nullable',
-            // 'allows_retail' => 'required|boolean|nullable',
-            // 'units_per_wholesale' => 'required|integer|min:1|nullable',
-            // 'sale_type' => 'required|in:unit,piece|nullable',
-            // 'unit_name' => 'required_if:sale_type,unit|string|nullable',
+            'Note' => 'required',
+        
             
         ], [
             'name.required' => 'حقل الاسم مطلوب.',
@@ -68,9 +67,7 @@ public function CreateProductAdd(Request $request)
             'supplier_id.exists' => 'المورد المحدد غير موجود.',
             'purchase_price.required' => 'حقل سعر الشراء مطلوب.',
             'wholesale_price.required' => 'حقل سعر الجملة مطلوب.',
-            // 'allows_retail.required' => 'يرجى تحديد إذا كان المنتج يُباع قطاعي أم لا.',
-            // 'sale_type.required' => 'يرجى تحديد نوع البيع.',
-            // 'unit_name.required_if' => 'يرجى تحديد اسم الوحدة إذا كان البيع بالوحدة.',
+            
         ]);
 
         $retail_price = $request->retail_price ?? 0;
@@ -81,15 +78,13 @@ public function CreateProductAdd(Request $request)
             'supplier_id' => $request->supplier_id,
             'quantity' => $request->quantity,
             'purchase_price' => $request->purchase_price,
-            // 'retail_price' => $request->retail_price,
             'wholesale_price' => $request->wholesale_price,
-            // 'units_per_wholesale' => $request->units_per_wholesale,
-            // 'allows_retail' => $request->allows_retail,
-            // 'sale_type' => $request->sale_type,
-            // 'unit_name' => $request->unit_name,
-            // 'retail_price' => $retail_price,
+            'Note' => $request->Note,
+        
 
         ]);
+
+    
 
         return redirect()->route('admin.product.index')->with('success', 'تم إضافة المنتج بنجاح');
     } catch (\Exception $e) {

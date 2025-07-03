@@ -35,18 +35,18 @@
                                         <div class="form-group">
                                             الصنف :
                                             <select class="form-control" name="category_id" id="category_id" required>
-                                                <option value="category_id">حدد الصنف</option>
+                                                <option value="category_id" required >حدد الصنف</option>
                                                 @foreach($categories as $category)
-                                                    <option value="{{ $category->id }}">{{ $category->CategoryName }}</option>
+                                                    <option value="{{ $category->id }}">{{ $category->CategoryName }}</option required>
                                                 @endforeach
                                             </select> 
                                         </div>
                                         <div class="form-group">
                                             المورد :
                                             <select class="form-control" name="supplier_id" id="supplier_id" required>
-                                                <option value="category_id">المورد </option>
+                                                <option value="category_id" required>المورد </option>
                                                 @foreach($suppliers as $supplier)
-                                                    <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
+                                                    <option value="{{ $supplier->id }}" required >{{ $supplier->supplier_name }}</option>
                                                 @endforeach
                                             </select>                 
                                         </div>

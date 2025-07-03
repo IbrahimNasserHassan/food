@@ -19,7 +19,7 @@ public function up()
 public function down()
 {
     Schema::table('products', function (Blueprint $table) {
-        $table->string('category'); // أو أي نوع كان
+        $table->string('category'); 
     });
 }
 };

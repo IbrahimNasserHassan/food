@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Product extends Model
 {
     protected $fillable = [
-        'name','category_id','supplier_id','quantity', 'purchase_price', 'retail_price', 'wholesale_price','allows_retail','units_per_wholesale'
+        'name','category_id','supplier_id','quantity', 'purchase_price', 'retail_price', 'wholesale_price','allows_retail','units_per_wholesale','Note'
 ];
 
 
@@ -23,11 +23,17 @@ class Product extends Model
         return $this->belongsTo(Supplier::class);
     }
 
-      public function items()
+    public function items()
     {
         return $this->hasMany(OrderDetails::class);
     }
 
+
+    public function purchases()
+{
+    return $this->belongsToMany(Purchase::class, 'purchase_items')
+                ->withPivot('quantity', 'purchase_price', 'total');
+}
 
 
 }

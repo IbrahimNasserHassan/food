@@ -59,7 +59,9 @@ $profilData = App\Models\Admin::find($id);
                                     <th class="wd-15p border-bottom-0">الاسم</th>
                                     <th class="wd-20p border-bottom-0">الكمية</th>
                                     <th class="wd-20p border-bottom-0">السعر</th>
+                                    <th class="wd-10p border-bottom-0">  المجموع</th>
                                     <th class="wd-10p border-bottom-0">  تاريخ التوريد : </th>
+
                                     
                                 </tr>
                             </thead>
@@ -69,6 +71,8 @@ $profilData = App\Models\Admin::find($id);
                             <td>{{ $supplier->name }}</td>
                             <td>{{ $supplier->quantity }}</td>
                             <td>{{ number_format($supplier->purchase_price) }}</td>
+                            <td>{{ number_format($supplier->purchase_price * $supplier->quantity) }}</td>
+                            {{-- <td>{{ number_format($supplier->supplier_total_amount) }}</td> --}}
                             <td>{{ $supplier->created_at->format('d-m-Y') }}</td>
 
                         </tr>

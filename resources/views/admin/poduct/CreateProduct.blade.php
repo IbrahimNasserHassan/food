@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-إضافة منتج
+إنشاء فاتروة مشتريات
 @endsection
 @section('css')
 @endsection
@@ -9,7 +9,7 @@
 				<div class="breadcrumb-header justify-content-between">
 					<div class="my-auto">
 						<div class="d-flex">
-							<h4 class="content-title mb-0 my-auto">المنتجات</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/  إضافة منتج</span>
+							<h4 class="content-title mb-0 my-auto">المشتريات</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/  إدخال فاتورة مشتريات جديدة</span>
 						</div>
 					</div>
 				</div>
@@ -31,86 +31,57 @@
                         <div class="col-lg-12 col-xl-10 col-md-12 col-sm-12">
                             <div class="card  box-shadow-0">
                                 <div class="card-header">
-                                    <h4 class="card-title mb-1">إضافة منتج </h4>
+                                    <h4 class="card-title mb-1">إدخال منتجات جديدة</h4>
                                 </div> <br>
                             
                                 <div class="card-body pt-0">
-                                    <form action="{{ route('admin.product.add') }}" method="POST" class="form-horizontal" >
-                                        @csrf
-                                        <div class="form-group">
-                                            <label for="sale_type">إسم المنتج</label>
-                                            <input type="text" name="name" class="form-control" id="inputName" placeholder="إسم المنتج">
-                                        </div>
-                                        <div>
-                                            <label for="sale_type"> الصنف</label>
-                                            <select class="form-control" name="category_id" id="category_id" required>
-                                                <option value="category_id">حدد الصنف</option>
-                                                @foreach($categories as $category)
-                                                    <option value="{{ $category->id }}">{{ $category->CategoryName }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div> <br>
-                                        <div>
-                                            <label for="sale_type"> المورد</label>
-                                            <select class="form-control" name="supplier_id" id="supplier_id" required>
-                                                <option value="">المورد </option>
-                                                @foreach($suppliers as $supplier)
-                                                    <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div> <br>
-                                        <div class="form-group">
-                                            <label for="sale_type">الكمية</label>
-                                            <input type="number" name="quantity" step="0.01" class="form-control" id="" placeholder="الكمية">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="sale_type">سعر الشراء</label>
-                                            <input type="number" name="purchase_price" class="form-control" placeholder="سعر الشراء">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="sale_type">سعر البيع </label>
-                                            <input type="number" name="wholesale_price" class="form-control" placeholder="سعر بيع  ">
-                                        </div>
+                                    <form action="{{ route('admin.purchase.store') }}" method="POST">
+                                            @csrf
                                         
-                                            {{-- <label for="allows_retail" class="form-label">يباع  بالتجزئة؟</label>
-                                            <select name="allows_retail" id="allows_retail" class="form-control">
-                                                <option value="1">نعم</option>
-                                                <option value="0">لا</option>
-                                            </select> --}}
-
-                                        {{-- <div class="form-group">
-                                            <label for="sale_type">نوع البيع</label>
-                                            <select name="sale_type" id="sale_type" class="form-control" required>
-                                                <option value="">اختر نوع البيع</option>
-                                                <option value="piece">بالحبة</option>
-                                                <option value="unit">بالتجزئة</option>
-                                            </select>
-                                        </div> --}}
-                                        {{-- <div class="form-group d-none" id="unit_name_group">
-                                            <label for="unit_name">نوع الوحدة </label>
-                                            <input type="text" name="unit_name" id="unit_name" class="form-control" placeholder="نوع الوحدة">
-                                        </div> --}}
-
-                                        {{-- <div class="form-group">
-                                            <label for="sale_type"> عدد الوحدات في الحبة</label>
-                                            <input type="number" name="units_per_wholesale" class="form-control" placeholder="  عدد الوحدات في الحبة الواحدة">
-                                        </div>
-
-                                        <div class="form-group d-none" id="retail_price_group">
-                                            <label for="retail_price" class="form-label">سعر البيع بالتجزئة</label>
-                                            <input type="text" name="retail_price" class="form-control" placeholder="  ">
-                                        </div> --}}
-                                        
-                                        </div>
-                                        
-                                        <div class="form-group mb-0 mt-9 justify-content-end">
-                                            <div>
-                                                <button type="submit" class="btn btn-primary">حفظ</button>
-                                                <a href="{{ route('admin.product.index') }}" class="btn btn-secondary"><i class="fa fa-cros">إلغاء</i></a>
+                                            <div class="mb-4">
+                                                <label for="supplier_id">المورد:</label>
+                                                <select name="supplier_id" class="form-control" required>
+                                                    <option value="">اختر المورد</option>
+                                                    @foreach($suppliers as $supplier)
+                                                        <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
-                                        </div>
                                         
-                                    </form>
+                                            <div id="products-area">
+                                                <div class="product-item border p-3 mb-3">
+                                                    <label>اسم المنتج:</label>
+                                                    <input type="text" name="products[0][name]" class="form-control" required>
+                                                
+                                                    <label>الصنف:</label>
+                                                    <select name="products[0][category_id]" class="form-control" required>
+                                                        <option value="">اختر الصنف</option>
+                                                        @foreach($categories as $category)
+                                                            <option value="{{ $category->id }}">{{ $category->CategoryName }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                
+                                                    <label>الكمية:</label>
+                                                    <input type="number" name="products[0][quantity]" class="form-control" required>
+                                                
+                                                    <label>سعر الشراء:</label>
+                                                    <input type="number" name="products[0][purchase_price]" class="form-control" required>
+                                                
+                                                    <label>سعر البيع:</label>
+                                                    <input type="number" name="products[0][wholesale_price]" class="form-control" required>
+                                                
+                                                    <label>ملاحظات:</label>
+                                                    <textarea name="products[0][note]" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                        
+                                            <button type="button" class="btn btn-success mb-3" id="add-product">إضافة منتج جديد</button>
+                                        
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-primary">حفظ الفاتورة</button>
+                                            </div>
+                                        </form>
+
                                 </div>
                             </div>
                         </div>
@@ -147,4 +118,30 @@
         });
     });
 </script>
+
+
+<script>
+    let index = 1;
+
+    document.getElementById('add-product').addEventListener('click', function () {
+        const productArea = document.getElementById('products-area');
+        const newProduct = document.querySelector('.product-item').cloneNode(true);
+
+        newProduct.querySelectorAll('input, select, textarea').forEach(input => {
+            input.name = input.name.replace(/\[\d+\]/, `[${index}]`);
+            input.value = '';
+        });
+
+        productArea.appendChild(newProduct);
+        index++;
+    });
+</script>
+
+
 @endsection
+
+                
+
+
+{{-- / --}}
+

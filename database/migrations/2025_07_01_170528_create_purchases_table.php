@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            //
-            $table->boolean('allows_retail')->default(true)->after('wholesale_price'); // Add allows_retail column
-            
+        Schema::create('purchases', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('supplier_id')->constrained('suppliers')->cascadeOnDelete();
+        $table->decimal('total_amount', 15, 2)->default(0);
+        $table->timestamps();
         });
     }
 
@@ -23,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('purchases');
     }
 };

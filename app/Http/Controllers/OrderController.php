@@ -172,7 +172,7 @@ public function StoreOrder(Request $request)
 
             // إنشاء تفاصيل الطلب
             OrderDetails::create([
-                // 'user_id' => Auth::id(), // إضافة معرف المستخدم الحالي
+                // 'user_id' => Auth::id(), //   المستخدم الحالي
                 'order_id' => $order->id,
                 'product_id' => $product->id,
                 'product_name' => $product->name,
@@ -211,6 +211,8 @@ private function generateInvoiceNumber()
 
     //End Method
 
+
+    
 
     public function OrderDelete(Order $order)
     {
