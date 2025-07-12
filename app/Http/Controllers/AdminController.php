@@ -11,10 +11,8 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\Customer;
-
-
-
-
+use App\Models\Purchase;
+use App\Models\Supplier;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Mail;
 
@@ -60,11 +58,13 @@ class AdminController extends Controller
         $total_invoices = order::count();
         $order_paid = Order::where('payment_status', 'paid')->count();
         $order_unpaid = Order::where('payment_status', 'unpaid')->count();
+        $total_supplier = Supplier::count();
+        $totam_purchaces = Purchase::count();
     
 		$profilData = Admin::find($id);
 
         return view('admin.dashboard',compact('profilData','total_customer','total_product',
-            'order_paid','order_unpaid','total_invoices'));
+            'order_paid','order_unpaid','total_invoices','total_supplier','totam_purchaces'));
     
     }
 

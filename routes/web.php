@@ -100,8 +100,13 @@ Route::get('/admin/customer/order-index',[OrderController::class, 'Indexorder'])
 Route::get('/admin/purchase',[PurchaseController::class, 'index'])->name('admin.purchase.index');
 Route::get('admin/purchase/create', [PurchaseController::class, 'create'])->name('admin.purchase.create');
 Route::post('/admin/purchase-store',[PurchaseController::class, 'StorePurchaseInvoice'])->name('admin.purchase.store');
-Route::get('/admin/purchase-edit/{id}', [PurchaseController::class, 'edit'])->name('admin.purchase.edit');
+Route::get('/admin/supplier/purchasedetails/{id}', [PurchaseController::class, 'ShowPurchaseInvoice'])->name('admin.supplier.purchase.invoice.Details');
+Route::get('/admin/purchase-edit/{id}', [PurchaseController::class, 'edit'])->name('admin.supplier.purchase.update');
 Route::post('/admin/purchase-update/{id}', [PurchaseController::class, 'update'])->name('admin.purchase.update');
+
+
+
+
 
 
 
@@ -140,6 +145,8 @@ Route::get('/admin/create-supplier',[SupplierController::class, 'create'])->name
 Route::post('/admin/store-supplier',[SupplierController::class, 'StoreSupplier'])->name('admin.supplier.store');
 Route::get('/admin/supplier-details/{id}',[SupplierController::class, 'SupplierDetails'])->name('admin.supplier.details');
 Route::get('/admin/supplier-delete/{id}',[SupplierController::class, 'SupplierDelete'])->name('admin.supplier.delete');
+Route::get('admin/suppliers/{id}/purchases', [SupplierController::class, 'suppliersPurchases'])->name('admin.supplier.purchase.show');
+
 
 
 });
@@ -151,6 +158,9 @@ Route::get('/admin/supplier-delete/{id}',[SupplierController::class, 'SupplierDe
 Route::get('order/create', [OrderController::class, 'CreateOrder'])->name('admin.order.create');
 Route::get('/customer/{customer}/order/create',[OrderController::class, 'CreateOrder'])->name('admin.customer.order.create');
 Route::post('/Order-Store',[OrderController::class, 'StoreOrder'])->name('admin.order.store');
+
+
+
 
 // Product Route
 Route::get('/product',[productController::class, 'ProductIndex'])->name('admin.product.index');

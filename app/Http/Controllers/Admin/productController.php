@@ -79,7 +79,6 @@ public function CreateProductAdd(Request $request)
             'quantity' => $request->quantity,
             'purchase_price' => $request->purchase_price,
             'wholesale_price' => $request->wholesale_price,
-            'Note' => $request->Note,
         
 
         ]);

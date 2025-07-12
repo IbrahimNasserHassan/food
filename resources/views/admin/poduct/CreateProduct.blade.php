@@ -70,13 +70,14 @@
                                                     <label>سعر البيع:</label>
                                                     <input type="number" name="products[0][wholesale_price]" class="form-control" required>
                                                 
-                                                    <label>ملاحظات:</label>
-                                                    <textarea name="products[0][note]" class="form-control"></textarea>
-                                                </div>
+                                                    </div>
                                             </div>
+                                            
+                                            <button type="button" class="btn btn-success mb-3" id="add-product">إضافة منتج جديد</button><br>
                                         
-                                            <button type="button" class="btn btn-success mb-3" id="add-product">إضافة منتج جديد</button>
-                                        
+                                            <label>ملاحظات:</label>
+                                        <textarea name="Pur_Note" class="form-control"></textarea> <br>
+                                                
                                             <div class="form-group">
                                                 <button type="submit" class="btn btn-primary">حفظ الفاتورة</button>
                                             </div>

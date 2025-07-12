@@ -58,7 +58,7 @@
                                                 <p class="mb-0 tx-12 text-white op-7">جميع العملاء</p>
                                             </div>
                                             <span class="float-right my-auto mr-auto">
-                                                <a href="{{ route('admin.supplier.index') }}"><i class="fas fa-arrow-circle-right text-white"></i></a>
+                                                <a href="{{ route('admin.customer.index') }}"><i class="fas fa-arrow-circle-right text-white"></i></a>
                                                 <span class="text-white op-7"></span>
                                             </span>
                                         </div>
@@ -69,19 +69,19 @@
                         </div>
 
                         <div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
-                            <div class="card overflow-hidden sales-card bg-info-gradient">
+                            <div class="card overflow-hidden sales-card bg-secondary-gradient">
                                 <div class="pl-3 pt-3 pr-3 pb-2 pt-0"><i class="fa fa-invoices"></i>
                                     <div class="">
-                                        <h6 class="mb-3 tx-12 text-white">جميع الفواتير  </h6>
+                                        <h6 class="mb-3 tx-12 text-white"> الموردين </h6>
                                     </div>
                                     <div class="pb-0 mt-0">
                                         <div class="d-flex">
                                             <div class="">
-                                                <h4 class="tx-20 font-weight-bold mb-1 text-white">{{ $total_invoices }}</h4>
-                                                <p class="mb-0 tx-12 text-white op-7">جميع الفواتير المنشأة في النظام</p>
+                                                <h4 class="tx-20 font-weight-bold mb-1 text-white">{{ $total_supplier }}</h4>
+                                                <p class="mb-0 tx-12 text-white op-7"> جميع الموردين  </p>
                                             </div>
                                             <span class="float-right my-auto mr-auto">
-                                                <a href="{{ route('admin.customer.order.index') }}"><i class="fas fa-arrow-circle-right text-white"></i></a>
+                                                <a href="{{ route('admin.supplier.index') }}"><i class="fas fa-arrow-circle-right text-white"></i></a>
                                                 <span class="text-white op-7"> </span>
                                             </span>
                                         </div>
@@ -94,13 +94,13 @@
                             <div class="card overflow-hidden sales-card bg-success-gradient">
                                 <div class="pl-3 pt-3 pr-3 pb-2 pt-0"><i class="fa fa-bildding"></i>
                                     <div class="">
-                                        <h6 class="mb-3 tx-12 text-white"> الفواتير المدفوعة</h6>
+                                        <h6 class="mb-3 tx-12 text-white"> فواتير المبيعات </h6>
                                     </div>
                                     <div class="pb-0 mt-0">
                                         <div class="d-flex">
                                             <div class="">
                                                 <h4 class="tx-20 font-weight-bold mb-1 text-white">{{ $order_paid }}</h4>
-                                                <p class="mb-0 tx-12 text-white op-7">الفواتير التي  تم سدادها  </p>
+                                                <p class="mb-0 tx-12 text-white op-7">فواتير المبيعات داخل النظام      </p>
                                             </div>
                                             <span class="float-right my-auto mr-auto">
                                                 <i class="fas fa-arrow-circle-right text-white"></i>
@@ -115,15 +115,15 @@
 
                         <div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
                             <div class="card overflow-hidden sales-card bg-warning">
-                                <div class="pl-3 pt-3 pr-3 pb-2 pt-0"><i class="fa fa-inf"></i>
+                                <div class="pl-3 pt-3 pr-3 pb-2 pt-0"><i class=""></i>
                                     <div class="">
-                                        <h6 class="mb-3 tx-12 text-white">الفواتير المعلقة</h6>
+                                        <h6 class="mb-3 tx-12 text-white">فواتير المشتريات  </h6>
                                     </div>
                                     <div class="pb-0 mt-0">
                                         <div class="d-flex">
                                             <div class="">
-                                                <h4 class="tx-20 font-weight-bold mb-1 text-white">  {{ $order_unpaid }} </h4>
-                                                <p class="mb-0 tx-12 text-white op-7"> الفواتير التي لم يتم سداد رسومها</p>
+                                                <h4 class="tx-20 font-weight-bold mb-1 text-white">  {{ $totam_purchaces }} </h4>
+                                                <p class="mb-0 tx-12 text-white op-7">فواتير المشريات داخل النظام</p>
                                             </div>
                                             <span class="float-right my-auto mr-auto">
                                                 <i class="fas fa-arrow-circle-right text-white"></i>

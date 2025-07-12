@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use App\Models\Purchase;
+use App\Models\PurchaseItem;
 
 class SupplierController extends Controller
 {
@@ -66,15 +68,37 @@ class SupplierController extends Controller
      */
     public function SupplierDetails(Supplier $supplier,$id)
     {
-        $product=Product::all();
+        $invoice = Supplier::findOrFail($id);
 
+        $suppliers=Supplier::all();
+        $purchase=Purchase::findOrFail($id);
+        $purchaseInvoice=PurchaseItem::findOrFail($id);
         $total_Barchaces=0;
         
         
-        $suppliers=Supplier::with(['products', 'products'])->find($id);
-        return view('admin.supplier.DetailsSupplier',compact('suppliers','product','total_Barchaces'));
+        // $suppliers=Supplier::with(['products', 'products'])->find($id);
+        return view('admin.Purchases.PurchesInvoiceSupplier',compact( 'invoice','suppliers','purchase'));
 
     }
+
+
+
+
+    
+
+    public function suppliersPurchases($id)
+{
+    $supplier = Supplier::with('purchases')->findOrFail($id);
+    $invoice = Supplier::findOrFail($id);
+    $purchase=Purchase::all();
+    $PurchaseItem=PurchaseItem::all();
+    return view('admin.Purchases.PurchesInvoiceSupplier', compact('supplier','invoice','purchase','PurchaseItem'));
+}
+    //End Method
+
+
+
+
 
     /**
      * Show the form for editing the specified resource.

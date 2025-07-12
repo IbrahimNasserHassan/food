@@ -66,7 +66,8 @@
                                                 <td>{{ $supplier->supplier_phone }}</td>
 												<td>{{ $supplier->supplier_address }}</td>
                                                 <td>
-                                                    <a href="{{ route('admin.supplier.details',['id' => $supplier->id]) }}" class="btn btn-sm btn-info"><i class="fa fa-list"> التفاصيل</i></a>
+													
+                                                    <a href="{{ route('admin.supplier.purchase.show',['id' => $supplier->id]) }}" class="btn btn-sm btn-info"><i class="fa fa-list"> فواتير المورد</i></a>
 													<form action="{{ route('admin.supplier.delete',['id' => $supplier->id]) }}"  class="d-inline" onsubmit="return confirm('هل أنت متأكد من حذف هذا المورد');">
 														@csrf
 														<button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"> حذف</i></button> <br>

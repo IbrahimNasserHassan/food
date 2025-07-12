@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-المنتجات
+المـخـزن
 @endsection
 @section('css')
 <!-- Internal Data table css -->
@@ -51,7 +51,6 @@
 												<th class="wd-15p border-bottom-0">الاسم</th>
 												<th class="wd-20p border-bottom-0">الصنف</th>
 												<th class="wd-20p border-bottom-0">الكمية</th>
-												<th class="wd-15p border-bottom-0">سعر الشراء</th>
 												<th class="wd-10p border-bottom-0">سعر البيع</th>
 												<th class="wd-10p border-bottom-0"> تاريخ الاضافة</th>
 												<th class="wd-10p border-bottom-0"> تاريخ آخر تحديث</th>
@@ -68,9 +67,7 @@
 												<td>{{ $product->name }}</td>
 												<td>{{ $product->category->CategoryName }}</td>
 												<td>{{ $product->quantity }}</td>
-												<td>
-													{{ number_format($product->purchase_price) }}
-												</td>
+												
 												<td>{{ number_format($product->wholesale_price) }}</td>
 												<td>{{ $product->created_at->format('Y-m-d')  }} </td>
 												<td>{{ $product->updated_at->format('Y-m-d') }}</td>

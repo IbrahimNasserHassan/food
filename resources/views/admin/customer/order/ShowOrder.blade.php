@@ -137,8 +137,6 @@ $profilData = App\Models\Admin::find($id);
                             <img alt="" src="{{ !empty($profilData->photo) ? url('upload/admin_images/'.$profilData->photo) : url('upload/DCT.png') }}">
                     </div>
                         <h1 class="invoice-title">PROMAX TECHNOLOGY FOR COMPUTER SERVICES </h1>
-
-
                     </div>
             </div><br>
 

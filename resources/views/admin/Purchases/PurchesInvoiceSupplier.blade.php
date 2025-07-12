@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-تفاصيل المورد
+فواتير مشتريات الموردين
 @endsection
 
 @section('css')
@@ -17,7 +17,7 @@
 <div class="breadcrumb-header justify-content-between">
     <div class="my-auto">
         <div class="d-flex">
-            <h4 class="content-title mb-0 my-auto">الموردين</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/  فواتير المورد</span>
+            <h4 class="content-title mb-0 my-auto">الموردين</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/   فواتير المشتريات</span>
         </div>
     </div>
 </div>
@@ -36,63 +36,53 @@ $profilData = App\Models\Admin::find($id);
 
 <div class="row row-sm">
     <div>
-        <a href="{{ route('admin.supplier.index') }}" class="btn btn-sm btn-dark float-right ">
-            <i class="fa fa-arrow-right"></i> رجوع
+        <a href="{{ route('admin.supplier.index') }}" class="btn btn-sm btn-dark float-right "><i class="fa fa-arrow-right"></i> رجوع
         </a>
-    </div>
-    <br>
+    </div><br> <br>
+    <div class="card">
+        <div class="card-header">سجل المشتريات</div>
+        <div class="tx-bold">
+            {{ $supplier->supplier_name }} 
+        </div>
 
-
-    <div class="col-9">
-        <div class="card card-secondary">
-            <div class="card-header pb-0">
-                <h2 class="card-title mb-0 pb-0">{{ $suppliers->supplier_name }} - {{ $suppliers->supplier_address }}</h2> 
-                <h2 class="card-title mb-0 pb-0"></h2><br>
-
-            </div>
-            <div class="card-body text-secondary">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table text-md-nowrap" id="example2">
-                            <thead>
-                                <tr>
-                                    <th class="wd-15p border-bottom-0">الاسم</th>
-                                    <th class="wd-20p border-bottom-0">الكمية</th>
-                                    <th class="wd-20p border-bottom-0">السعر</th>
-                                    <th class="wd-10p border-bottom-0">  المجموع</th>
-                                    <th class="wd-10p border-bottom-0">  تاريخ التوريد : </th>
-
-                                    
-                                </tr>
-                            </thead>
-                        {{-- @foreach ( $suppliers->products as $supplier )
-
+            <div class="card-body">
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td>{{ $supplier->name }}</td>
-                            <td>{{ $supplier->quantity }}</td>
-                            <td>{{ number_format($supplier->purchase_price) }}</td>
-                            <td>{{ number_format($supplier->purchase_price * $supplier->quantity) }}</td>
-                            <td>{{ number_format($supplier->supplier_total_amount) }}</td>
-                            <td>{{ $supplier->created_at->format('d-m-Y') }}</td>
-
+                            <th>رقم الفاتورة</th>
+                            <th>تاريخ إنشاء الفاتورة</th>
+                            <th>إجمالي الفاتورة</th>
+                            <th> الملاحظة</th>
+                            <th> آخر تحديث تم </th>
+                            <th>الإجراءات</th>
                         </tr>
-                        @endforeach --}}
+                    </thead>
+                    <tbody>
+                        @foreach($supplier->purchases as $purchase)
+                        <tr>
+                            <td>{{ $purchase->id }}</td>
+                            <td>{{ $purchase->created_at->format('Y-m-d') }}</td>
+                            <td>{{ number_format($purchase->total_amount) }}</td>
+                            <td>{{ $purchase->Pur_Note }}</td>
+                            <td>{{ $purchase->updated_at->format('Y-m-d') }}</td>
 
+                            <td>
+                                <a href="{{ route('admin.supplier.purchase.invoice.Details',['id' =>$purchase->id  ]) }}" class="btn btn-sm btn-info">
+                                    <i class="fa fa-eye"> عرض التفاصيل </i>
+                                </a>
+                                <a href="{{ route('admin.supplier.purchase.update',['id' =>$purchase->id  ]) }}" class="btn btn-sm btn-warning">
+                                    <i class="fa fa-edite"> تحديث </i>
+                                </a>
+                                
+                            </td>
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
-                    </div>
-                </div>
-            </div>
-            </div>
-            <div class="card-footer">
-            رقم الهاتف : {{ $suppliers->supplier_phone }}
-            </div>
         </div>
     </div>
-
-
-
-</div>
+        </div>
+    </div>
 </div>
 @endsection
 

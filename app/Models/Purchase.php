@@ -10,7 +10,7 @@ class Purchase extends Model
     //
     use HasFactory;
 
-    protected $fillable = ['supplier_id', 'total_amount'];
+    protected $fillable = ['supplier_id', 'total_amount','Pur_Note'];
 
     public function supplier()
     {

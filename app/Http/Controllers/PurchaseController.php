@@ -30,6 +30,9 @@ class PurchaseController extends Controller
         //
     }
 
+
+
+
     public function StorePurchaseInvoice(Request $request)
 {
     try {
@@ -45,16 +48,17 @@ class PurchaseController extends Controller
             'products.*.wholesale_price' => 'required|numeric|min:1',
         ]);
 
-        // إنشاء فاتورة المشتريات
+        //  فاتورة المشتريات
         $purchaseInvoice = Purchase::create([
             'supplier_id' => $request->supplier_id,
+            'Pur_Note' => $request->Pur_Note,
             'total_amount' => 0,
         ]);
 
         $totalAmount = 0;
 
         foreach ($request->products as $productData) {
-            // إنشاء منتج جديد
+            //  منتج جديد
             $product = Product::create([
                 'name' => $productData['name'],
                 'category_id' => $productData['category_id'],
@@ -62,7 +66,6 @@ class PurchaseController extends Controller
                 'quantity' => $productData['quantity'],
                 'purchase_price' => $productData['purchase_price'],
                 'wholesale_price' => $productData['wholesale_price'],
-                'Note' => $productData['note'] ?? '',
             ]);
 
 
@@ -94,24 +97,48 @@ class PurchaseController extends Controller
 
 
 
-    public function show(Purchase $purchase)
+
+    public function ShowPurchaseInvoice(Purchase $purchase,PurchaseItem $PurchaseItem,$id)
     {
-        //
+
+        $purchase = Purchase::with('Supplier')->findOrFail($id);
+        $PurchaseItem = PurchaseItem::with('product')->where('purchase_id', $id)->get();
+
+        
+        return view("admin.Purchases.PurchesInvoiceSupplierDetails", compact( 'purchase', 'PurchaseItem'));
+
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Purchase $purchase)
+    public function edit(Purchase $purchase, $id)
     {
         //
+        $purchase=Purchase::findOrFail($id);
+
+        return view('admin.Purchases.UpdatePurchaseInvoice',compact('purchase'));
+
     }
+    // End Method
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Purchase $purchase)
+    public function update(Request $request, Purchase $purchase,$id)
     {
+
+        DB::beginTransaction();
+
+        $purchase=Purchase::findOrFail($id);
+        $purchase->Pur_Note;
+        $purchase->save();
+
+        DB::commit();
+
+        $purchase->update($request->all());
+        return redirect()->route('admin.supplier.index')->with('success','تم تحديث الملاحظة بنجاح ');
+
         //
     }
 
